@@ -5,6 +5,7 @@ import java.util.*;
 import java.io.*;
 public class PhysParser{  public static void main(String args []) throws ParseException  {
     try    {          PhysParser parser;
+    
 
     HashMap map = new HashMap();	
 	boolean func = true;
