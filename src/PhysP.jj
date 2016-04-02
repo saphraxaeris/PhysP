@@ -1,26 +1,57 @@
 /**
  * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
- */options{  static = true;}PARSER_BEGIN(PhysParser)
+ */options{
+  ignore_case = true;  static = true;}PARSER_BEGIN(PhysParser)
 import java.util.*;
 import java.io.*;
 public class PhysParser{  public static void main(String args []) throws ParseException  {
-    try    {          PhysParser parser;
+    try    {    	PhysParser parser;
     
-
-    HashMap map = new HashMap();	
-	boolean func = true;
+    	HashMap variables = new HashMap();	
+		boolean valid = true;
 	
-    if (args.length == 0)
-    	parser = new PhysParser (System.in);
-    else
-    	parser = new PhysParser (new java.io.FileInputStream(args[0]));
+    	if (args.length == 0) {
+    		parser = new PhysParser(System.in);
+		}
+    	else {
+    		parser = new PhysParser(new java.io.FileInputStream(args[0]));
+		}
 
-	while (func)
-		func = parser.input(map);
+		while (valid) {
+			valid = parser.read(variables);
+		}
     }
-    
-    catch (Throwable e)
+   	catch (Throwable e)
     {
-     System.out.println(e.getMessage());
-    }
-    }}PARSER_END(PhysParser)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : /* OPERATORS */{  < PLUS : "+" >| < MINUS : "-" >| < MULTIPLY : "*" >| < DIVIDE : "/" >}TOKEN :{  < CONSTANT : (< DIGIT >)+ >| < #DIGIT : [ "0"-"9" ] >}int one_line() :{}{  sum() ";"  {    return 0;  }| ";"  {    return 1;  }}void sum() :{}{  term()  (    (      < PLUS >    | < MINUS >    )    term()  )*}void term() :{}{  unary()  (    (      < MULTIPLY >    | < DIVIDE >    )    unary()  )*}void unary() :{}{  < MINUS > element()| element()}void element() :{}{  < CONSTANT >| "(" sum() ")"}
+     	System.out.println(e.getMessage());
+    }  }}PARSER_END(PhysParser)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : /* Operators */{  < PLUS : "+" >| < MINUS : "-" >| < MULTIPLY : "*" >| < DIVIDE : "/" >
+| < QUESTION : "is" >
+| < EQUALLITY : <EQUAL> | <NOT> >
+| < #EQUAL : "equal to" >
+| < #NOT : "not equal to" >
+| < WITH : "with" >
+| < RETURN : "return" >}
+TOKEN: /* Objects and Vectors */
+{
+  < ID: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )* >
+| < OBJECT : "object" | "vector" >
+| < ATTRIBUTE : "acceleration" | "initial velocity" | "initial position" | "final velocity"
+			  | "final position" | "mass" | "time moved" | "x component" | "y component"
+			  | "angle" | "magnitude" | "displacement" >}
+
+TOKEN: /* Doubles */
+{
+    <DOUBLE: <SIGNED> ( "." (<DIGIT>)+ )? >
+|   <DIGIT: ["0"-"9"] >
+| 	<SIGNED: ("-")? (<DIGIT>)+>
+}
+boolean read(HashMap variables):
+{}
+{
+  	(Statement(variables) (".")?)* { return true; }
+|   "Terminate" { return false; }
+|   <EOF> { return false; }}
+
+void Statement(HashMap variables):{}
+{
+  "" { return; }}
