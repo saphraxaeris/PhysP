@@ -24,11 +24,11 @@ public class PhysParser{  public static void main(String args []) throws Parse
    	catch (Throwable e)
     {
      	System.out.println(e.getMessage());
-    }  }}PARSER_END(PhysParser)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : /* Operators */{  < PLUS : "+" >| < MINUS : "-" >| < MULTIPLY : "*" >| < DIVIDE : "/" >
-| < QUESTION : "is" >
+    }  }}PARSER_END(PhysParser)SKIP :{  "\r"| "\t"| "\n"}TOKEN : /* Operators */{  < PLUS : "+" >| < MINUS : "-" >| < MULTIPLY : "*" >| < DIVIDE : "/" >
+| < QUESTION : "is " >
 | < EQUALLITY : <EQUAL> | <NOT> >
-| < #EQUAL : "equal to" >
-| < #NOT : "not equal to" >
+| < #EQUAL : "equal to " >
+| < #NOT : "not equal to " >
 | < WITH : "with" >
 | < RETURN : "return" >}
 TOKEN: /* Objects and Vectors */
@@ -52,6 +52,77 @@ boolean read(HashMap variables):
 |   "Terminate" { return false; }
 |   <EOF> { return false; }}
 
-void Statement(HashMap variables):{}
+void Statement(HashMap variables):{
+  Token obj=null, ident=null, attr=null, val=null;
+  StringBuilder sb = new StringBuilder();
+  Boolean check=null, persist=false;
+}
 {
-  "" { return; }}
+  "define " ident=<ID> " as " obj=< OBJECT>  {
+    if(obj.image.equals("object"))    {	  variables.put(ident.image, new PhysPObject());
+    }
+    else if(obj.image.equals("vector"))
+    {	  variables.put(ident.image, new PhysPVector());
+    }  }
+|
+  ident=<ID> " with " attr=<ATTRIBUTE> " " val=< DOUBLE>  {
+    if(variables.containsKey(ident.image)) {	  if(variables.get(ident.image) instanceof PhysPObject)
+      {
+        PhysPObject physpObject = (PhysPObject)variables.get(ident.image);
+        physpObject.setVariable(Double.parseDouble(val.image), attr.image);
+		variables.put(ident.image, physpObject);
+      }
+      else if(variables.get(ident.image) instanceof PhysPVector)
+      {
+		PhysPVector physpVector = (PhysPVector)variables.get(ident.image);
+        physpVector.setVariable(Double.parseDouble(val.image), attr.image);
+		variables.put(ident.image, physpVector);
+      }
+    }
+  }
+|
+  "return " ident=<ID> " " attr=<ATTRIBUTE>
+  {
+    if(variables.containsKey(ident.image))
+    {
+      double result = Double.NaN;	  if(variables.get(ident.image) instanceof PhysPObject)
+      {
+        PhysPObject physpObject = (PhysPObject)variables.get(ident.image);
+        result = physpObject.getVariable(attr.image);
+	    variables.put(ident.image, physpObject);
+      }
+      else if(variables.get(ident.image) instanceof PhysPVector)
+      {
+		PhysPVector physpVector = (PhysPVector)variables.get(ident.image);
+        result = physpVector.getVariable(attr.image);
+		variables.put(ident.image, physpVector);
+      }
+      if(result != Double.NaN)      {		System.out.println(result);
+      }
+    }  }
+|
+  <QUESTION> ident=<ID> " " attr=<ATTRIBUTE> " " <EQUALLITY> val=<DOUBLE>  {
+    if(variables.containsKey(ident.image))    {
+      double result = Double.NaN;	  if(variables.get(ident.image) instanceof PhysPObject)
+      {
+        PhysPObject physpObject = (PhysPObject)variables.get(ident.image);
+        result = physpObject.getVariable(attr.image);
+		variables.put(ident.image, physpObject);
+      }
+      else if(variables.get(ident.image) instanceof PhysPVector)
+      {
+		PhysPVector physpVector = (PhysPVector)variables.get(ident.image);
+        result = physpVector.getVariable(attr.image);
+		variables.put(ident.image, physpVector);
+      }
+      if(result != Double.NaN)      {		if(result == Double.parseDouble(val.image))
+        {
+			System.out.println("True.");
+        }
+        else
+        {
+			System.out.println("False.");
+        }
+      }
+    }  }
+}
