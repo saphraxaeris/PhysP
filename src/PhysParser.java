@@ -31,16 +31,20 @@ public class PhysParser implements PhysParserConstants {
 
   static final public boolean read(HashMap variables) throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case TERMINATE:
+      jj_consume_token(TERMINATE);
+                  {if (true) return false;}
+      break;
     case DEFINE:
     case QUESTION:
     case ID:
-    case 30:
+    case 31:
       label_1:
       while (true) {
         Statement(variables);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 28:
-          jj_consume_token(28);
+        case 29:
+          jj_consume_token(29);
           break;
         default:
           jj_la1[0] = jj_gen;
@@ -50,7 +54,7 @@ public class PhysParser implements PhysParserConstants {
         case DEFINE:
         case QUESTION:
         case ID:
-        case 30:
+        case 31:
           ;
           break;
         default:
@@ -58,11 +62,7 @@ public class PhysParser implements PhysParserConstants {
           break label_1;
         }
       }
-                                         {if (true) return true;}
-      break;
-    case TERMINATE:
-      jj_consume_token(TERMINATE);
-                  {if (true) return false;}
+                                     {if (true) return true;}
       break;
     case 0:
       jj_consume_token(0);
@@ -96,7 +96,7 @@ public class PhysParser implements PhysParserConstants {
       break;
     case ID:
       ident = jj_consume_token(ID);
-      jj_consume_token(29);
+      jj_consume_token(30);
       attr = jj_consume_token(ATTRIBUTE);
       val = jj_consume_token(DOUBLE);
     if(variables.containsKey(ident.image)) {
@@ -115,8 +115,8 @@ public class PhysParser implements PhysParserConstants {
       System.out.println("Invalid identifier.");
     }
       break;
-    case 30:
-      jj_consume_token(30);
+    case 31:
+      jj_consume_token(31);
       ident = jj_consume_token(ID);
       attr = jj_consume_token(ATTRIBUTE);
     if(variables.containsKey(ident.image)) {
@@ -236,7 +236,7 @@ public class PhysParser implements PhysParserConstants {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x10000000,0x40400820,0x40600821,0x40400820,};
+      jj_la1_0 = new int[] {0x20000000,0x82001040,0x82401041,0x82001040,};
    }
 
   /** Constructor with InputStream. */
@@ -374,7 +374,7 @@ public class PhysParser implements PhysParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[31];
+    boolean[] la1tokens = new boolean[32];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -388,7 +388,7 @@ public class PhysParser implements PhysParserConstants {
         }
       }
     }
-    for (int i = 0; i < 31; i++) {
+    for (int i = 0; i < 32; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

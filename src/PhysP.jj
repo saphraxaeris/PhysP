@@ -24,8 +24,8 @@ public class PhysParser{  public static void main(String args []) throws Parse
    	catch (Throwable e)
     {
      	System.out.println(e.getMessage());
-    }  }}PARSER_END(PhysParser)SKIP :{  "\r"| "\t"| "\n"
-| " "}
+    }  }}PARSER_END(PhysParser)SKIP :{
+ " " | "\t" | "\n" | "\r" | <"--" (~["\n","\r"])* ("\n"|"\r")>}
 TOKEN : /* Keywords */
 {  < DEFINE: "define " >
 | < AS: " as " >
@@ -45,11 +45,12 @@ TOKEN : /* Keywords */
 
 TOKEN: /* Objects and Vectors */
 {
-  < ID: ["a"-"z","A"-"Z","_"](["a"-"z","A"-"Z","_","0"-"9"])* >
-| < OBJECT : "object" | "vector" >
+  
+  < OBJECT : "object" | "vector" >
 | < ATTRIBUTE : "acceleration" | "initial velocity" | "initial position" | "final velocity"
 			  | "final position" | "mass" | "time moved" | "x component" | "y component"
-			  | "angle" | "magnitude" | "displacement" | "initial time" | "final time" | "average velocity" >}
+			  | "angle" | "magnitude" | "displacement" | "initial time" | "final time" | "average velocity" >
+| < ID: ["a"-"z","A"-"Z","_"](["a"-"z","A"-"Z","_","0"-"9"])* >}
 
 TOKEN: /* Doubles */
 {
@@ -60,15 +61,16 @@ TOKEN: /* Doubles */
 boolean read(HashMap variables):
 {}
 {
-  	(Statement(variables) (".")?)+ { return true; }
-|   <TERMINATE> { return false; }
+    <TERMINATE> { return false; }
+|   (Statement(variables) (".")?)+ { return true; }
+
 |   <EOF> { return false; }}
 
 void Statement(HashMap variables):{
   Token obj=null, ident=null, attr=null, val=null, eql=null;
 }
 {
-  <DEFINE>ident=<ID><AS>obj=<OBJECT>  {
+  "define "ident=<ID>" as "obj=<OBJECT>  {
     if(obj.image.equals("object")) {	  variables.put(ident.image, new PhysPObject());
     }
     else if(obj.image.equals("vector")) {	  variables.put(ident.image, new PhysPVector());
