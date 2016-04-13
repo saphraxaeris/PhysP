@@ -33,14 +33,14 @@ public class PhysParser implements PhysParserConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case QUESTION:
     case ID:
-    case 24:
-    case 28:
+    case 26:
+    case 30:
       label_1:
       while (true) {
         Statement(variables);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 22:
-          jj_consume_token(22);
+        case 25:
+          jj_consume_token(25);
           break;
         default:
           jj_la1[0] = jj_gen;
@@ -49,8 +49,8 @@ public class PhysParser implements PhysParserConstants {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case QUESTION:
         case ID:
-        case 24:
-        case 28:
+        case 26:
+        case 30:
           ;
           break;
         default:
@@ -60,8 +60,8 @@ public class PhysParser implements PhysParserConstants {
       }
                                          {if (true) return true;}
       break;
-    case 23:
-      jj_consume_token(23);
+    case TERMINATE:
+      jj_consume_token(TERMINATE);
                   {if (true) return false;}
       break;
     case 0:
@@ -77,112 +77,144 @@ public class PhysParser implements PhysParserConstants {
   }
 
   static final public void Statement(HashMap variables) throws ParseException {
-  Token obj=null, ident=null, attr=null, val=null;
+  Token obj=null, ident=null, attr=null, val=null, eql=null;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 24:
-      jj_consume_token(24);
+    case 26:
+      jj_consume_token(26);
       ident = jj_consume_token(ID);
-      jj_consume_token(25);
+      jj_consume_token(27);
       obj = jj_consume_token(OBJECT);
-    if(obj.image.equals("object"))
-    {
+    if(obj.image.equals("object")) {
           variables.put(ident.image, new PhysPObject());
     }
-    else if(obj.image.equals("vector"))
-    {
+    else if(obj.image.equals("vector")) {
           variables.put(ident.image, new PhysPVector());
-    }// Else exception invalid object
-
+    }
+    else {
+      System.out.println("Invalid data type.");
+    }
       break;
     case ID:
       ident = jj_consume_token(ID);
-      jj_consume_token(26);
+      jj_consume_token(28);
       attr = jj_consume_token(ATTRIBUTE);
-      jj_consume_token(27);
+      jj_consume_token(29);
       val = jj_consume_token(DOUBLE);
     if(variables.containsKey(ident.image)) {
-          if(variables.get(ident.image) instanceof PhysPObject)
-      {
+          if(variables.get(ident.image) instanceof PhysPObject) {
         PhysPObject physpObject = (PhysPObject) variables.get(ident.image);
         physpObject.setVariable(Double.parseDouble(val.image), attr.image);
                 variables.put(ident.image, physpObject);
       }
-      else if(variables.get(ident.image) instanceof PhysPVector)
-      {
+      else if(variables.get(ident.image) instanceof PhysPVector) {
                 PhysPVector physpVector = (PhysPVector) variables.get(ident.image);
         physpVector.setVariable(Double.parseDouble(val.image), attr.image);
                 variables.put(ident.image, physpVector);
       }
     }
-    else
-    {
-      System.out.println("Invalid ID"); // object/vector has not been previously declared
+    else {
+      System.out.println("Invalid identifier.");
     }
       break;
-    case 28:
-      jj_consume_token(28);
+    case 30:
+      jj_consume_token(30);
       ident = jj_consume_token(ID);
-      jj_consume_token(27);
+      jj_consume_token(29);
       attr = jj_consume_token(ATTRIBUTE);
-    if(variables.containsKey(ident.image))
-    {
+    if(variables.containsKey(ident.image)) {
       double result = Double.NaN;
-          if(variables.get(ident.image) instanceof PhysPObject)
-      {
+          if(variables.get(ident.image) instanceof PhysPObject) {
         PhysPObject physpObject = (PhysPObject)variables.get(ident.image);
         result = physpObject.getVariable(attr.image);
             variables.put(ident.image, physpObject);
       }
-      else if(variables.get(ident.image) instanceof PhysPVector)
-      {
+      else if(variables.get(ident.image) instanceof PhysPVector) {
                 PhysPVector physpVector = (PhysPVector)variables.get(ident.image);
         result = physpVector.getVariable(attr.image);
                 variables.put(ident.image, physpVector);
       }
-      if(result != Double.NaN)
-      {
+      if(result != Double.NaN) {
                 System.out.println(result);
       }
     }
-    else
-    {
-      System.out.println("Invalid ID"); // object/vector has not been previously declared
+    else {
+      System.out.println("Invalid identifier.");
     }
       break;
     case QUESTION:
       jj_consume_token(QUESTION);
       ident = jj_consume_token(ID);
-      jj_consume_token(27);
+      jj_consume_token(29);
       attr = jj_consume_token(ATTRIBUTE);
-      jj_consume_token(27);
-      jj_consume_token(EQUALLITY);
+      jj_consume_token(29);
+      eql = jj_consume_token(EQUALLITY);
       val = jj_consume_token(DOUBLE);
-    if(variables.containsKey(ident.image))
-    {
+    if(variables.containsKey(ident.image)) {
       double result = Double.NaN;
-          if(variables.get(ident.image) instanceof PhysPObject)
-      {
+          if(variables.get(ident.image) instanceof PhysPObject) {
         PhysPObject physpObject = (PhysPObject)variables.get(ident.image);
         result = physpObject.getVariable(attr.image);
                 variables.put(ident.image, physpObject);
       }
-      else if(variables.get(ident.image) instanceof PhysPVector)
-      {
+      else if(variables.get(ident.image) instanceof PhysPVector) {
                 PhysPVector physpVector = (PhysPVector)variables.get(ident.image);
         result = physpVector.getVariable(attr.image);
                 variables.put(ident.image, physpVector);
       }
-      if(result != Double.NaN)
-      {
-                if(result == Double.parseDouble(val.image)) // Verify Equality
-        {
-                        System.out.println("True.");
-        }
-        else
-        {
-                        System.out.println("False.");
-        }
+
+      if(result != Double.NaN) {
+                if(eql.image.equals("equal to")) {
+                        if(result == Double.parseDouble(val.image)) {
+                                System.out.println("True.");
+                }
+                else {
+                                System.out.println("False.");
+                }
+                }
+                else if (eql.image.equals("not equal to")) {
+                        if(result == Double.parseDouble(val.image)) {
+                                System.out.println("False.");
+                }
+                else {
+                                System.out.println("True.");
+                }
+                }
+                else if (eql.image.equals("greater than")) {
+                  if(result > Double.parseDouble(val.image)) {
+                                System.out.println("True.");
+                }
+                else {
+                                System.out.println("False.");
+                }
+                }
+                else if (eql.image.equals("less than")) {
+                  if(result < Double.parseDouble(val.image)) {
+                                System.out.println("True.");
+                }
+                else {
+                                System.out.println("False.");
+                }
+                }
+                else if (eql.image.equals("greater than or equal to")) {
+                  if(result >= Double.parseDouble(val.image)) {
+                                System.out.println("True.");
+                }
+                else {
+                                System.out.println("False.");
+                }
+                }
+                else if (eql.image.equals("less than or equal to")) {
+                  if(result <= Double.parseDouble(val.image)) {
+                                System.out.println("True.");
+                }
+                else {
+                                System.out.println("False.");
+                }
+                }
       }
+    }
+    else {
+      System.out.println("Invalid identifier.");
     }
       break;
     default:
@@ -208,7 +240,7 @@ public class PhysParser implements PhysParserConstants {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x400000,0x11010100,0x11810101,0x11010100,};
+      jj_la1_0 = new int[] {0x2000000,0x44080100,0x440c0101,0x44080100,};
    }
 
   /** Constructor with InputStream. */
@@ -346,7 +378,7 @@ public class PhysParser implements PhysParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[29];
+    boolean[] la1tokens = new boolean[31];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -360,7 +392,7 @@ public class PhysParser implements PhysParserConstants {
         }
       }
     }
-    for (int i = 0; i < 29; i++) {
+    for (int i = 0; i < 31; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

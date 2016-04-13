@@ -26,13 +26,16 @@ public class PhysParser{  public static void main(String args []) throws Parse
      	System.out.println(e.getMessage());
     }  }}PARSER_END(PhysParser)SKIP :{  "\r"| "\t"| "\n"}TOKEN : /* Operators */{  < PLUS : "+" >| < MINUS : "-" >| < MULTIPLY : "*" >| < DIVIDE : "/" >
 | < QUESTION : "is " >
-| < EQUALLITY : <EQUAL> | <NOT> | <GREATER> | <LESS> >
-| < #EQUAL : "equal to " >
-| < #NOT : "not equal to " >
+| < EQUALLITY : <EQUAL> | <NOT> | <GREATER> | <LESS> | <GREATEREQUAL> | <LESSEQUAL> >
+| < #EQUAL : "equal to" >
+| < #NOT : "not equal to" >
 | < #GREATER: "greater than" >
+| < #GREATEREQUAL: "greater than or equal to" >
 | < #LESS: "less than" >
+| < #LESSEQUAL: "less than or equal to" >
 | < WITH : "with" >
-| < RETURN : "return" >}
+| < RETURN : "return" >
+| < TERMINATE : "terminate">}
 TOKEN: /* Objects and Vectors */
 {
   < ID: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )* >
@@ -51,84 +54,119 @@ boolean read(HashMap variables):
 {}
 {
   	(Statement(variables) (".")?)+ { return true; }
-|   "Terminate" { return false; }
+|   <TERMINATE> { return false; }
 |   <EOF> { return false; }}
 
 void Statement(HashMap variables):{
-  Token obj=null, ident=null, attr=null, val=null;
+  Token obj=null, ident=null, attr=null, val=null, eql=null;
 }
 {
   "define " ident=<ID> " as " obj=<OBJECT>  {
-    if(obj.image.equals("object"))    {	  variables.put(ident.image, new PhysPObject());
+    if(obj.image.equals("object")) {	  variables.put(ident.image, new PhysPObject());
     }
-    else if(obj.image.equals("vector"))
-    {	  variables.put(ident.image, new PhysPVector());
-    }// Else exception invalid object  }
+    else if(obj.image.equals("vector")) {	  variables.put(ident.image, new PhysPVector());
+    }
+    else {
+      System.out.println("Invalid data type.");    }  }
 |
   ident=<ID> " with " attr=<ATTRIBUTE> " " val=<DOUBLE>  {
-    if(variables.containsKey(ident.image)) {	  if(variables.get(ident.image) instanceof PhysPObject)
-      {
+    if(variables.containsKey(ident.image)) {	  if(variables.get(ident.image) instanceof PhysPObject) {
         PhysPObject physpObject = (PhysPObject) variables.get(ident.image);
         physpObject.setVariable(Double.parseDouble(val.image), attr.image);
 		variables.put(ident.image, physpObject);
       }
-      else if(variables.get(ident.image) instanceof PhysPVector)
-      {
+      else if(variables.get(ident.image) instanceof PhysPVector) {
 		PhysPVector physpVector = (PhysPVector) variables.get(ident.image);
         physpVector.setVariable(Double.parseDouble(val.image), attr.image);
 		variables.put(ident.image, physpVector);
       }
     }
-    else    {      System.out.println("Invalid ID"); // object/vector has not been previously declared
+    else {
+      System.out.println("Invalid identifier.");
     }
   }
 |
   "return " ident=<ID> " " attr=<ATTRIBUTE>
   {
-    if(variables.containsKey(ident.image))
-    {
-      double result = Double.NaN;	  if(variables.get(ident.image) instanceof PhysPObject)
-      {
+    if(variables.containsKey(ident.image)) {
+      double result = Double.NaN;	  if(variables.get(ident.image) instanceof PhysPObject) {
         PhysPObject physpObject = (PhysPObject)variables.get(ident.image);
         result = physpObject.getVariable(attr.image);
 	    variables.put(ident.image, physpObject);
       }
-      else if(variables.get(ident.image) instanceof PhysPVector)
-      {
+      else if(variables.get(ident.image) instanceof PhysPVector) {
 		PhysPVector physpVector = (PhysPVector)variables.get(ident.image);
         result = physpVector.getVariable(attr.image);
 		variables.put(ident.image, physpVector);
       }
-      if(result != Double.NaN)      {		System.out.println(result);
+      if(result != Double.NaN) {		System.out.println(result);
       }
     }
-    else
-    {
-      System.out.println("Invalid ID"); // object/vector has not been previously declared
+    else {
+      System.out.println("Invalid identifier.");
     }  }
 |
-  <QUESTION> ident=<ID> " " attr=<ATTRIBUTE> " " <EQUALLITY> val=<DOUBLE>  {
-    if(variables.containsKey(ident.image))    {
-      double result = Double.NaN;	  if(variables.get(ident.image) instanceof PhysPObject)
-      {
+  <QUESTION> ident=<ID> " " attr=<ATTRIBUTE> " " eql=<EQUALLITY> val=<DOUBLE>  {
+    if(variables.containsKey(ident.image)) {
+      double result = Double.NaN;	  if(variables.get(ident.image) instanceof PhysPObject) {
         PhysPObject physpObject = (PhysPObject)variables.get(ident.image);
         result = physpObject.getVariable(attr.image);
 		variables.put(ident.image, physpObject);
       }
-      else if(variables.get(ident.image) instanceof PhysPVector)
-      {
+      else if(variables.get(ident.image) instanceof PhysPVector) {
 		PhysPVector physpVector = (PhysPVector)variables.get(ident.image);
         result = physpVector.getVariable(attr.image);
 		variables.put(ident.image, physpVector);
       }
-      if(result != Double.NaN)      {		if(result == Double.parseDouble(val.image)) // Verify Equality
-        {
-			System.out.println("True.");
-        }
-        else
-        {
-			System.out.println("False.");
-        }
+      
+      if(result != Double.NaN) {
+		if(eql.image.equals("equal to")) {			if(result == Double.parseDouble(val.image)) {
+				System.out.println("True.");
+        	}
+        	else {
+				System.out.println("False.");
+        	}
+		}
+		else if (eql.image.equals("not equal to")) {			if(result == Double.parseDouble(val.image)) {
+				System.out.println("False.");
+        	}
+        	else {
+				System.out.println("True.");
+        	}
+		}
+		else if (eql.image.equals("greater than")) {
+		  if(result > Double.parseDouble(val.image)) {
+				System.out.println("True.");
+        	}
+        	else {
+				System.out.println("False.");
+        	}		}
+		else if (eql.image.equals("less than")) {
+		  if(result < Double.parseDouble(val.image)) {
+				System.out.println("True.");
+        	}
+        	else {
+				System.out.println("False.");
+        	}
+		}
+		else if (eql.image.equals("greater than or equal to")) {
+		  if(result >= Double.parseDouble(val.image)) {
+				System.out.println("True.");
+        	}
+        	else {
+				System.out.println("False.");
+        	}
+		}
+		else if (eql.image.equals("less than or equal to")) {
+		  if(result <= Double.parseDouble(val.image)) {
+				System.out.println("True.");
+        	}
+        	else {
+				System.out.println("False.");
+        	}
+		}
       }
-    }  }
+    }
+    else {
+      System.out.println("Invalid identifier.");    }  }
 }
