@@ -30,37 +30,54 @@ public class PhysParser implements PhysParserConstants {
   }
 
   static final public boolean read(HashMap variables) throws ParseException {
-    label_1:
-    while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case QUESTION:
-      case ID:
-      case 22:
-      case 26:
-        ;
-        break;
-      default:
-        jj_la1[0] = jj_gen;
-        break label_1;
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case QUESTION:
+    case ID:
+    case 22:
+    case 26:
+      label_1:
+      while (true) {
+        Statement(variables);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case 20:
+          jj_consume_token(20);
+          break;
+        default:
+          jj_la1[0] = jj_gen;
+          ;
+        }
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case QUESTION:
+        case ID:
+        case 22:
+        case 26:
+          ;
+          break;
+        default:
+          jj_la1[1] = jj_gen;
+          break label_1;
+        }
       }
-      Statement(variables);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 20:
-        jj_consume_token(20);
-        break;
-      default:
-        jj_la1[1] = jj_gen;
-        ;
-      }
-    }
                                          {if (true) return true;}
+      break;
+    case 21:
+      jj_consume_token(21);
+                  {if (true) return false;}
+      break;
+    case 0:
+      jj_consume_token(0);
+            {if (true) return false;}
+      break;
+    default:
+      jj_la1[2] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
     throw new Error("Missing return statement in function");
   }
 
   static final public void Statement(HashMap variables) throws ParseException {
   Token obj=null, ident=null, attr=null, val=null;
-  StringBuilder sb = new StringBuilder();
-  Boolean check=null, persist=false;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 22:
       jj_consume_token(22);
@@ -74,7 +91,8 @@ public class PhysParser implements PhysParserConstants {
     else if(obj.image.equals("vector"))
     {
           variables.put(ident.image, new PhysPVector());
-    }
+    }// Else exception invalid object
+
       break;
     case ID:
       ident = jj_consume_token(ID);
@@ -85,17 +103,18 @@ public class PhysParser implements PhysParserConstants {
     if(variables.containsKey(ident.image)) {
           if(variables.get(ident.image) instanceof PhysPObject)
       {
-        PhysPObject physpObject = (PhysPObject)variables.get(ident.image);
+        PhysPObject physpObject = (PhysPObject) variables.get(ident.image);
         physpObject.setVariable(Double.parseDouble(val.image), attr.image);
                 variables.put(ident.image, physpObject);
       }
       else if(variables.get(ident.image) instanceof PhysPVector)
       {
-                PhysPVector physpVector = (PhysPVector)variables.get(ident.image);
+                PhysPVector physpVector = (PhysPVector) variables.get(ident.image);
         physpVector.setVariable(Double.parseDouble(val.image), attr.image);
                 variables.put(ident.image, physpVector);
       }
-    }
+    }// Else exception invalid id
+
       break;
     case 26:
       jj_consume_token(26);
@@ -121,7 +140,8 @@ public class PhysParser implements PhysParserConstants {
       {
                 System.out.println(result);
       }
-    }
+    }// Else exception invalid id
+
       break;
     case QUESTION:
       jj_consume_token(QUESTION);
@@ -148,7 +168,7 @@ public class PhysParser implements PhysParserConstants {
       }
       if(result != Double.NaN)
       {
-                if(result == Double.parseDouble(val.image))
+                if(result == Double.parseDouble(val.image)) // Verify Equality
         {
                         System.out.println("True.");
         }
@@ -160,7 +180,7 @@ public class PhysParser implements PhysParserConstants {
     }
       break;
     default:
-      jj_la1[2] = jj_gen;
+      jj_la1[3] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -176,13 +196,13 @@ public class PhysParser implements PhysParserConstants {
   static public Token jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[3];
+  static final private int[] jj_la1 = new int[4];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x4404100,0x100000,0x4404100,};
+      jj_la1_0 = new int[] {0x100000,0x4404100,0x4604101,0x4404100,};
    }
 
   /** Constructor with InputStream. */
@@ -203,7 +223,7 @@ public class PhysParser implements PhysParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 3; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -217,7 +237,7 @@ public class PhysParser implements PhysParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 3; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -234,7 +254,7 @@ public class PhysParser implements PhysParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 3; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -244,7 +264,7 @@ public class PhysParser implements PhysParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 3; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -260,7 +280,7 @@ public class PhysParser implements PhysParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 3; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -269,7 +289,7 @@ public class PhysParser implements PhysParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 3; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -325,7 +345,7 @@ public class PhysParser implements PhysParserConstants {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 4; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

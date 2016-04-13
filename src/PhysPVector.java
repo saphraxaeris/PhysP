@@ -18,10 +18,10 @@ public class PhysPVector {
 	 */
 	public void setVariable(double d, String name) {
 		switch (name) {
-		case "xComponent":
+		case "x component":
 			xComponent = d;
 			break;
-		case "yComponent":
+		case "y component":
 			yComponent = d;
 			break;
 		case "magnitude":
@@ -40,10 +40,10 @@ public class PhysPVector {
 	 */
 	public double getVariable(String name) {
 		switch (name) {
-		case "xComponent":
+		case "x component":
 			calcXComponent();
 			return xComponent;
-		case "yComponent":
+		case "y component":
 			calcYComponent();
 			return yComponent;
 		case "magnitude":

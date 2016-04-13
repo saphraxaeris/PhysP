@@ -26,7 +26,7 @@ public class PhysParser{  public static void main(String args []) throws Parse
      	System.out.println(e.getMessage());
     }  }}PARSER_END(PhysParser)SKIP :{  "\r"| "\t"| "\n"}TOKEN : /* Operators */{  < PLUS : "+" >| < MINUS : "-" >| < MULTIPLY : "*" >| < DIVIDE : "/" >
 | < QUESTION : "is " >
-| < EQUALLITY : <EQUAL> | <NOT> >
+| < EQUALLITY : <EQUAL> | <NOT> > // Add greater than and less than
 | < #EQUAL : "equal to " >
 | < #NOT : "not equal to " >
 | < WITH : "with" >
@@ -37,7 +37,7 @@ TOKEN: /* Objects and Vectors */
 | < OBJECT : "object" | "vector" >
 | < ATTRIBUTE : "acceleration" | "initial velocity" | "initial position" | "final velocity"
 			  | "final position" | "mass" | "time moved" | "x component" | "y component"
-			  | "angle" | "magnitude" | "displacement" >}
+			  | "angle" | "magnitude" | "displacement" | "initial time" | "final time" | "average velocity" > // Correct}
 
 TOKEN: /* Doubles */
 {
@@ -48,37 +48,35 @@ TOKEN: /* Doubles */
 boolean read(HashMap variables):
 {}
 {
-  	(Statement(variables) (".")?)* { return true; }
+  	(Statement(variables) (".")?)+ { return true; }
 |   "Terminate" { return false; }
 |   <EOF> { return false; }}
 
 void Statement(HashMap variables):{
   Token obj=null, ident=null, attr=null, val=null;
-  StringBuilder sb = new StringBuilder();
-  Boolean check=null, persist=false;
 }
 {
-  "define " ident=<ID> " as " obj=< OBJECT>  {
+  "define " ident=<ID> " as " obj=<OBJECT>  {
     if(obj.image.equals("object"))    {	  variables.put(ident.image, new PhysPObject());
     }
     else if(obj.image.equals("vector"))
     {	  variables.put(ident.image, new PhysPVector());
-    }  }
+    }// Else exception invalid object  }
 |
-  ident=<ID> " with " attr=<ATTRIBUTE> " " val=< DOUBLE>  {
+  ident=<ID> " with " attr=<ATTRIBUTE> " " val=<DOUBLE>  {
     if(variables.containsKey(ident.image)) {	  if(variables.get(ident.image) instanceof PhysPObject)
       {
-        PhysPObject physpObject = (PhysPObject)variables.get(ident.image);
+        PhysPObject physpObject = (PhysPObject) variables.get(ident.image);
         physpObject.setVariable(Double.parseDouble(val.image), attr.image);
 		variables.put(ident.image, physpObject);
       }
       else if(variables.get(ident.image) instanceof PhysPVector)
       {
-		PhysPVector physpVector = (PhysPVector)variables.get(ident.image);
+		PhysPVector physpVector = (PhysPVector) variables.get(ident.image);
         physpVector.setVariable(Double.parseDouble(val.image), attr.image);
 		variables.put(ident.image, physpVector);
       }
-    }
+    }// Else exception invalid id
   }
 |
   "return " ident=<ID> " " attr=<ATTRIBUTE>
@@ -99,7 +97,7 @@ void Statement(HashMap variables):{
       }
       if(result != Double.NaN)      {		System.out.println(result);
       }
-    }  }
+    }// Else exception invalid id  }
 |
   <QUESTION> ident=<ID> " " attr=<ATTRIBUTE> " " <EQUALLITY> val=<DOUBLE>  {
     if(variables.containsKey(ident.image))    {
@@ -115,7 +113,7 @@ void Statement(HashMap variables):{
         result = physpVector.getVariable(attr.image);
 		variables.put(ident.image, physpVector);
       }
-      if(result != Double.NaN)      {		if(result == Double.parseDouble(val.image))
+      if(result != Double.NaN)      {		if(result == Double.parseDouble(val.image)) // Verify Equality
         {
 			System.out.println("True.");
         }
