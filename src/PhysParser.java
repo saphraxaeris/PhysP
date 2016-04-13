@@ -31,25 +31,25 @@ public class PhysParser implements PhysParserConstants {
 
   static final public boolean read(HashMap variables) throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case DEFINE:
     case QUESTION:
     case ID:
-    case 26:
     case 30:
       label_1:
       while (true) {
         Statement(variables);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 25:
-          jj_consume_token(25);
+        case 28:
+          jj_consume_token(28);
           break;
         default:
           jj_la1[0] = jj_gen;
           ;
         }
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case DEFINE:
         case QUESTION:
         case ID:
-        case 26:
         case 30:
           ;
           break;
@@ -79,10 +79,10 @@ public class PhysParser implements PhysParserConstants {
   static final public void Statement(HashMap variables) throws ParseException {
   Token obj=null, ident=null, attr=null, val=null, eql=null;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 26:
-      jj_consume_token(26);
+    case DEFINE:
+      jj_consume_token(DEFINE);
       ident = jj_consume_token(ID);
-      jj_consume_token(27);
+      jj_consume_token(AS);
       obj = jj_consume_token(OBJECT);
     if(obj.image.equals("object")) {
           variables.put(ident.image, new PhysPObject());
@@ -96,9 +96,8 @@ public class PhysParser implements PhysParserConstants {
       break;
     case ID:
       ident = jj_consume_token(ID);
-      jj_consume_token(28);
-      attr = jj_consume_token(ATTRIBUTE);
       jj_consume_token(29);
+      attr = jj_consume_token(ATTRIBUTE);
       val = jj_consume_token(DOUBLE);
     if(variables.containsKey(ident.image)) {
           if(variables.get(ident.image) instanceof PhysPObject) {
@@ -119,7 +118,6 @@ public class PhysParser implements PhysParserConstants {
     case 30:
       jj_consume_token(30);
       ident = jj_consume_token(ID);
-      jj_consume_token(29);
       attr = jj_consume_token(ATTRIBUTE);
     if(variables.containsKey(ident.image)) {
       double result = Double.NaN;
@@ -144,9 +142,7 @@ public class PhysParser implements PhysParserConstants {
     case QUESTION:
       jj_consume_token(QUESTION);
       ident = jj_consume_token(ID);
-      jj_consume_token(29);
       attr = jj_consume_token(ATTRIBUTE);
-      jj_consume_token(29);
       eql = jj_consume_token(EQUALLITY);
       val = jj_consume_token(DOUBLE);
     if(variables.containsKey(ident.image)) {
@@ -240,7 +236,7 @@ public class PhysParser implements PhysParserConstants {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x2000000,0x44080100,0x440c0101,0x44080100,};
+      jj_la1_0 = new int[] {0x10000000,0x40400820,0x40600821,0x40400820,};
    }
 
   /** Constructor with InputStream. */

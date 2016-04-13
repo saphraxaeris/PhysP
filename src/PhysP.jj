@@ -24,7 +24,13 @@ public class PhysParser{  public static void main(String args []) throws Parse
    	catch (Throwable e)
     {
      	System.out.println(e.getMessage());
-    }  }}PARSER_END(PhysParser)SKIP :{  "\r"| "\t"| "\n"}TOKEN : /* Operators */{  < PLUS : "+" >| < MINUS : "-" >| < MULTIPLY : "*" >| < DIVIDE : "/" >
+    }  }}PARSER_END(PhysParser)SKIP :{  "\r"| "\t"| "\n"
+| " "}
+TOKEN : /* Keywords */
+{  < DEFINE: "define " >
+| < AS: " as " >
+}
+TOKEN : /* Operators */{  < PLUS : "+" >| < MINUS : "-" >| < MULTIPLY : "*" >| < DIVIDE : "/" >
 | < QUESTION : "is " >
 | < EQUALLITY : <EQUAL> | <NOT> | <GREATER> | <LESS> | <GREATEREQUAL> | <LESSEQUAL> >
 | < #EQUAL : "equal to" >
@@ -35,10 +41,11 @@ public class PhysParser{  public static void main(String args []) throws Parse
 | < #LESSEQUAL: "less than or equal to" >
 | < WITH : "with" >
 | < RETURN : "return" >
-| < TERMINATE : "terminate">}
+| < TERMINATE : "terminate">}
+
 TOKEN: /* Objects and Vectors */
 {
-  < ID: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )* >
+  < ID: ["a"-"z","A"-"Z","_"](["a"-"z","A"-"Z","_","0"-"9"])* >
 | < OBJECT : "object" | "vector" >
 | < ATTRIBUTE : "acceleration" | "initial velocity" | "initial position" | "final velocity"
 			  | "final position" | "mass" | "time moved" | "x component" | "y component"
@@ -61,7 +68,7 @@ void Statement(HashMap variables):{
   Token obj=null, ident=null, attr=null, val=null, eql=null;
 }
 {
-  "define " ident=<ID> " as " obj=<OBJECT>  {
+  <DEFINE>ident=<ID><AS>obj=<OBJECT>  {
     if(obj.image.equals("object")) {	  variables.put(ident.image, new PhysPObject());
     }
     else if(obj.image.equals("vector")) {	  variables.put(ident.image, new PhysPVector());
@@ -69,7 +76,7 @@ void Statement(HashMap variables):{
     else {
       System.out.println("Invalid data type.");    }  }
 |
-  ident=<ID> " with " attr=<ATTRIBUTE> " " val=<DOUBLE>  {
+  ident=<ID> " with " attr=<ATTRIBUTE> val=<DOUBLE>  {
     if(variables.containsKey(ident.image)) {	  if(variables.get(ident.image) instanceof PhysPObject) {
         PhysPObject physpObject = (PhysPObject) variables.get(ident.image);
         physpObject.setVariable(Double.parseDouble(val.image), attr.image);
@@ -86,7 +93,7 @@ void Statement(HashMap variables):{
     }
   }
 |
-  "return " ident=<ID> " " attr=<ATTRIBUTE>
+  "return " ident=<ID> attr=<ATTRIBUTE>
   {
     if(variables.containsKey(ident.image)) {
       double result = Double.NaN;	  if(variables.get(ident.image) instanceof PhysPObject) {
@@ -106,7 +113,7 @@ void Statement(HashMap variables):{
       System.out.println("Invalid identifier.");
     }  }
 |
-  <QUESTION> ident=<ID> " " attr=<ATTRIBUTE> " " eql=<EQUALLITY> val=<DOUBLE>  {
+  <QUESTION> ident=<ID> attr=<ATTRIBUTE> eql=<EQUALLITY> val=<DOUBLE>  {
     if(variables.containsKey(ident.image)) {
       double result = Double.NaN;	  if(variables.get(ident.image) instanceof PhysPObject) {
         PhysPObject physpObject = (PhysPObject)variables.get(ident.image);
