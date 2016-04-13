@@ -26,9 +26,11 @@ public class PhysParser{  public static void main(String args []) throws Parse
      	System.out.println(e.getMessage());
     }  }}PARSER_END(PhysParser)SKIP :{  "\r"| "\t"| "\n"}TOKEN : /* Operators */{  < PLUS : "+" >| < MINUS : "-" >| < MULTIPLY : "*" >| < DIVIDE : "/" >
 | < QUESTION : "is " >
-| < EQUALLITY : <EQUAL> | <NOT> > // Add greater than and less than
+| < EQUALLITY : <EQUAL> | <NOT> | <GREATER> | <LESS> >
 | < #EQUAL : "equal to " >
 | < #NOT : "not equal to " >
+| < #GREATER: "greater than" >
+| < #LESS: "less than" >
 | < WITH : "with" >
 | < RETURN : "return" >}
 TOKEN: /* Objects and Vectors */
@@ -37,7 +39,7 @@ TOKEN: /* Objects and Vectors */
 | < OBJECT : "object" | "vector" >
 | < ATTRIBUTE : "acceleration" | "initial velocity" | "initial position" | "final velocity"
 			  | "final position" | "mass" | "time moved" | "x component" | "y component"
-			  | "angle" | "magnitude" | "displacement" | "initial time" | "final time" | "average velocity" > // Correct}
+			  | "angle" | "magnitude" | "displacement" | "initial time" | "final time" | "average velocity" >}
 
 TOKEN: /* Doubles */
 {
@@ -76,7 +78,9 @@ void Statement(HashMap variables):{
         physpVector.setVariable(Double.parseDouble(val.image), attr.image);
 		variables.put(ident.image, physpVector);
       }
-    }// Else exception invalid id
+    }
+    else    {      System.out.println("Invalid ID"); // object/vector has not been previously declared
+    }
   }
 |
   "return " ident=<ID> " " attr=<ATTRIBUTE>
@@ -97,7 +101,11 @@ void Statement(HashMap variables):{
       }
       if(result != Double.NaN)      {		System.out.println(result);
       }
-    }// Else exception invalid id  }
+    }
+    else
+    {
+      System.out.println("Invalid ID"); // object/vector has not been previously declared
+    }  }
 |
   <QUESTION> ident=<ID> " " attr=<ATTRIBUTE> " " <EQUALLITY> val=<DOUBLE>  {
     if(variables.containsKey(ident.image))    {

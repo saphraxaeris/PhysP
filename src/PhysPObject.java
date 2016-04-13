@@ -205,17 +205,14 @@ public class PhysPObject {
 				initPos = finalPos - displacement;
 				return true;//0
 			}
-			else if (finalPos != Double.NaN  && accel != Double.NaN && timeMoved != Double.NaN) {
+			else if (finalPos != Double.NaN  && accel != Double.NaN && (timeMoved != Double.NaN || (initTime != Double.NaN && finalTime != Double.NaN))) {
 				if(timeMoved == Double.NaN)
 					timeMoved = finalTime - initTime;
-				if(displacement == Double.NaN)
-					displacement = finalPos - initPos;
-
 				initPos = finalPos - (initVel*timeMoved) - ((0.5)*accel*Math.pow(timeMoved, 2));
 				return true;//2
 			}
 			else if (finalVel != Double.NaN && initVel != Double.NaN && accel != Double.NaN && finalPos != Double.NaN) {
-				initPos = (Math.pow(initVel, 2) - Math.pow(finalVel, 2) + (2*accel*finalPos))/(2*accel);
+				initPos = (Math.pow(initVel, 2) + (2*accel*finalPos) - Math.pow(finalVel, 2))/(2*accel);
 				return true;//3
 			}
 			else { //Could not be computed. Print needed information implement more thoroughly later
