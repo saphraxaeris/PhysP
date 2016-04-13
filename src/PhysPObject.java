@@ -232,16 +232,53 @@ public class PhysPObject {
 
 	private boolean calcFinalPos() {
 		if (finalPos == Double.NaN) {
-			System.out.println("Calculation of this attribute is not yet implemented.");
-			return false;
+			if (displacement != Double.NaN && initPos != Double.NaN) {
+				finalPos = initPos - displacement;
+				return true;//0
+			}
+			else if (initPos != Double.NaN  && accel != Double.NaN && (timeMoved != Double.NaN || (initTime != Double.NaN && finalTime != Double.NaN))) {
+				if(timeMoved == Double.NaN)
+					timeMoved = finalTime - initTime;
+				finalPos = initPos + (initVel*timeMoved) + ((0.5)*accel*Math.pow(timeMoved, 2));
+				return true;//2
+			}
+			else if (finalVel != Double.NaN && initVel != Double.NaN && accel != Double.NaN && initPos != Double.NaN) {
+				finalPos = (Math.pow(finalVel, 2 + (2*accel*finalPos)) - Math.pow(initVel, 2))/(2*accel);
+				return true;//3
+			}
+			else { //Could not be computed. Print needed information implement more thoroughly later
+				System.out.println("Too few argument");
+				return false;
+			}
 		}
 		return true;
 	}
 
+	// Kinematic Formulas (a = constant)
+	//0.) displacement = x - x0
+	//1.) v = v0 + a*t
+	//2.) x = x0 + v0*t + (1/2)*a*t^2
+	//3.) v^2 = v0^2 + 2*a*(x - x0)
+	//4.) avgV = (v + v0) / 2 			Added
+	
 	private boolean calcDisplacement() {
 		if (displacement == Double.NaN) {
-			System.out.println("Calculation of this attribute is not yet implemented.");
-			return false;
+			if (initPos != Double.NaN && finalPos != Double.NaN) {
+				displacement = finalPos - initPos;
+				return true;//0				
+			}
+			else if (initVel != Double.NaN && (timeMoved != Double.NaN || (initTime != Double.NaN && finalTime != Double.NaN)) && accel != Double.NaN) {
+				displacement = initVel*timeMoved + (0.5)*accel*Math.pow(timeMoved, 2);
+				return true;//2
+			}
+			else if (finalVel != Double.NaN && initVel != Double.NaN && accel != Double.NaN) {
+				displacement = (Math.pow(finalVel, 2) - Math.pow(initVel, 2))/(2*accel);
+				return true;
+			}
+			else { //Could not be computed. Print needed information implement more thoroughly later
+				System.out.println("Too few argument");
+				return false;
+			}
 		}
 		return true;
 	}
