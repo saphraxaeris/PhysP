@@ -316,7 +316,7 @@ public class PhysPObject {
 	//1.) v = v0 + a*t
 	//2.) x = x0 + v0*t + (1/2)*a*t^2
 	//3.) v^2 = v0^2 + 2*a*(x - x0)
-	//4.) avgV = (v + v0) / 2 			Added
+	//4.) avgV = (v + v0) / 2 
 	private boolean calcTimeMoved() {
 		if (timeMoved == Double.NaN) {
 			if(initTime != Double.NaN && finalTime != Double.NaN){
