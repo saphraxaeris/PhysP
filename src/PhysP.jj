@@ -108,7 +108,7 @@ void Statement(HashMap variables):{
         result = physpVector.getVariable(attr.image);
 		variables.put(ident.image, physpVector);
       }
-      if(result != Double.NaN) {		System.out.println(result);
+      if(!Double.isNaN(result)) {		System.out.println(result);
       }
     }
     else {
@@ -128,7 +128,7 @@ void Statement(HashMap variables):{
 		variables.put(ident.image, physpVector);
       }
       
-      if(result != Double.NaN) {
+      if(!Double.isNaN(result)) {
 		if(eql.image.equals("equal to")) {			if(result == Double.parseDouble(val.image)) {
 				System.out.println("True.");
         	}

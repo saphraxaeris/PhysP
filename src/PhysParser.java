@@ -131,7 +131,7 @@ public class PhysParser implements PhysParserConstants {
         result = physpVector.getVariable(attr.image);
                 variables.put(ident.image, physpVector);
       }
-      if(result != Double.NaN) {
+      if(!Double.isNaN(result)) {
                 System.out.println(result);
       }
     }
@@ -158,7 +158,7 @@ public class PhysParser implements PhysParserConstants {
                 variables.put(ident.image, physpVector);
       }
 
-      if(result != Double.NaN) {
+      if(!Double.isNaN(result)) {
                 if(eql.image.equals("equal to")) {
                         if(result == Double.parseDouble(val.image)) {
                                 System.out.println("True.");

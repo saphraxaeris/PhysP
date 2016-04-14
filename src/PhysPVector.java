@@ -61,90 +61,97 @@ public class PhysPVector {
 	/* Private Functions */
 	/***************************************/
 	private boolean calcXComponent() {
-		if (xComponent == Double.NaN) {
-			if (magnitude != Double.NaN && angle != Double.NaN) {
-				xComponent = magnitude*Math.cos(angle);
-				return true;
-			} else if (magnitude != Double.NaN && yComponent != Double.NaN) {
-				xComponent = Math.sqrt(Math.pow(magnitude, 2) - Math.pow(yComponent, 2));
-				return true;
-			} else {
-				if (magnitude != Double.NaN) {
-					System.out.println("Too few arguments: Y Component or Angle is needed.");
-				} else {
-					System.out.println("Too few arguments: Magnitude is needed.");
-				}
-				return false;
-			}
+		if (!Double.isNaN(magnitude) && !Double.isNaN(angle)) {
+			xComponent = magnitude*Math.cos(angle);
+			return true;
+		} 
+		else if (!Double.isNaN(magnitude) && !Double.isNaN(yComponent)) {
+			xComponent = Math.sqrt(Math.pow(magnitude, 2) - Math.pow(yComponent, 2));
+			return true;
+		} 
+		else if (!Double.isNaN(xComponent)) {
+			return true;
 		}
-		return true;
+		else {
+			if (!Double.isNaN(magnitude)) {
+				System.out.println("Too few arguments: Y Component or Angle is needed.");
+			} else {
+				System.out.println("Too few arguments: Magnitude is needed.");
+			}
+			return false;
+		}
 	}
 
 	private boolean calcYComponent() {
-		if (yComponent == Double.NaN) {
-			if (magnitude != Double.NaN && angle != Double.NaN) {
-				yComponent = magnitude*Math.sin(angle);
-				return true;
-			} else if (magnitude != Double.NaN && xComponent != Double.NaN) {
-				yComponent = Math.sqrt(Math.pow(magnitude, 2) - Math.pow(xComponent, 2));
-				return true;
-			} else {
-				if (magnitude != Double.NaN) {
-					System.out.println("Too few arguments: X Component or Angle is needed.");
-				} else {
-					System.out.println("Too few arguments: Magnitude is needed.");
-				}
-				return false;
-			}
+		if (!Double.isNaN(magnitude) && !Double.isNaN(angle)) {
+			yComponent = magnitude*Math.sin(angle);
+			return true;
+		} 
+		else if (!Double.isNaN(magnitude) && !Double.isNaN(xComponent)) {
+			yComponent = Math.sqrt(Math.pow(magnitude, 2) - Math.pow(xComponent, 2));
+			return true;
+		} 
+		else if (!Double.isNaN(yComponent)) {
+			return true;
 		}
-		return true;
+		else {
+			if (!Double.isNaN(magnitude)) {
+				System.out.println("Too few arguments: X Component or Angle is needed.");
+			} else {
+				System.out.println("Too few arguments: Magnitude is needed.");
+			}
+			return false;
+		}
 	}
 
 	private boolean calcMagnitude() {
-		if (magnitude == Double.NaN) {
-			if(xComponent != Double.NaN && yComponent != Double.NaN) {
-				magnitude = Math.sqrt(Math.pow(xComponent, 2) + Math.pow(yComponent, 2));
-				return true;
-			}
-			else if(xComponent != Double.NaN && angle != Double.NaN) {
-				magnitude = xComponent/Math.cos(angle);
-				return true;
-			}
-			else if(yComponent != Double.NaN && angle != Double.NaN) {
-				magnitude = yComponent/Math.sin(angle);
-				return true;
+		if(!Double.isNaN(xComponent) && !Double.isNaN(yComponent)) {
+			magnitude = Math.sqrt(Math.pow(xComponent, 2) + Math.pow(yComponent, 2));
+			return true;
+		}
+		else if(!Double.isNaN(xComponent) && !Double.isNaN(angle)) {
+			magnitude = xComponent/Math.cos(angle);
+			return true;
+		}
+		else if(!Double.isNaN(yComponent) && !Double.isNaN(angle)) {
+			magnitude = yComponent/Math.sin(angle);
+			return true;
+		}
+		else if (!Double.isNaN(magnitude)) {
+			return true;
+		}
+		else {
+			if(Double.isNaN(angle)) {
+				System.out.println("Too few arguments: Angle is needed.");
 			}
 			else {
-				if(angle == Double.NaN) {
-					System.out.println("Too few arguments: Angle is needed.");
-				}
-				else {
-					System.out.println("Too few arguments: X or Y component is needed.");
-				}
-				return false;
+				System.out.println("Too few arguments: X or Y component is needed.");
 			}
+			return false;
 		}
-		return true;
 	}
 
 	private boolean calcAngle() {
-		if (angle == Double.NaN) {
-			if(xComponent != Double.NaN && yComponent != Double.NaN) {
+
+			if(!Double.isNaN(xComponent) && !Double.isNaN(yComponent)) {
 				angle = Math.atan(yComponent/xComponent);
 				return true;
 			}
-			else if(xComponent != Double.NaN && magnitude != Double.NaN) {
+			else if(!Double.isNaN(xComponent) && !Double.isNaN(magnitude)) {
 			
 				angle = Math.atan(yComponent/xComponent);
 				return true;
 			}
-			else if(yComponent != Double.NaN && magnitude != Double.NaN) {
+			else if(!Double.isNaN(yComponent) && !Double.isNaN(magnitude)) {
 				
 				angle = Math.atan(yComponent/xComponent);
 				return true;
 			}
+			else if (!Double.isNaN(angle)) {
+				return true;
+			}
 			else {
-				if(magnitude != Double.NaN) {
+				if(!Double.isNaN(magnitude)) {
 					System.out.println("Too few arguments: X or Y component is needed.");
 				}
 				else {
@@ -152,7 +159,5 @@ public class PhysPVector {
 				}
 				return false;
 			}
-		}
-		return true;
 	}
 }

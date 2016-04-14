@@ -3,7 +3,7 @@ public class PhysPObject {
 	private double mass = Double.NaN;
 	private double initVel = Double.NaN;
 	private double finalVel = Double.NaN;
-	private double avgVel = Double.NaN; // Add?
+	private double avgVel = Double.NaN; // Need to make adjustments to code. for every condition that requires: (v && v0) can also be found with: (avgV && (v || v0))
 	private double initPos = Double.NaN;
 	private double finalPos = Double.NaN;
 	private double displacement = Double.NaN; // (x - x0)
@@ -111,7 +111,7 @@ public class PhysPObject {
 	/* Private Functions */
 	/***************************************/
 	private boolean calcMass() {
-		if (mass == Double.NaN) {
+		if (Double.isNaN(mass)) {
 			System.out.println("Calculation of this attribute is not yet implemented.");
 			return false;
 		}
@@ -126,37 +126,37 @@ public class PhysPObject {
 	//4.) avgV = (v + v0) / 2 			Added
 
 	private boolean calcInitVel() {
-		if (initVel == Double.NaN) {
-			if (finalPos != Double.NaN && accel != Double.NaN && (timeMoved != Double.NaN || (initTime != Double.NaN && finalTime != Double.NaN))) {
-				if(timeMoved == Double.NaN)
-					timeMoved = finalTime - initTime;
-				initVel = finalVel - (accel*timeMoved);
-				return true;//1
-			}
-			else if (((finalPos != Double.NaN && initPos != Double.NaN) || displacement != Double.NaN) && accel != Double.NaN && (timeMoved != Double.NaN || (initTime != Double.NaN && finalTime != Double.NaN))) {
-				if(timeMoved == Double.NaN)
-					timeMoved = finalTime - initTime;
-				if(displacement == Double.NaN)
-					displacement = finalPos - initPos;
-				initVel = (displacement - (0.5)*accel*(Math.pow(timeMoved, 2)))/timeMoved;
-				return true;//2
-			}
-			else if (finalVel != Double.NaN && accel != Double.NaN && ((finalPos != Double.NaN && initPos != Double.NaN) || displacement != Double.NaN)) {
-				if (displacement == Double.NaN)
-					displacement = finalPos - initPos;
-				initVel = Math.sqrt(Math.pow(finalVel, 2) - 2*accel*displacement);
-				return true;//3
-			}
-			else if (avgVel != Double.NaN && finalVel != Double.NaN){
-				initVel = (2*avgVel) - finalVel;
-				return true;//4
-			}
-			else { //Could not be computed. Print needed information implement more thoroughly later
-				System.out.println("Too few argument");
-				return false;
-			}
+		if (!Double.isNaN(finalPos) && !Double.isNaN(accel) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
+			if(Double.isNaN(timeMoved))
+				timeMoved = finalTime - initTime;
+			initVel = finalVel - (accel*timeMoved);
+			return true;//1
 		}
-		return true;
+		else if (((!Double.isNaN(finalPos) && !Double.isNaN(initPos)) || !Double.isNaN(displacement)) && !Double.isNaN(accel) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
+			if(Double.isNaN(timeMoved))
+				timeMoved = finalTime - initTime;
+			if(Double.isNaN(displacement))
+				displacement = finalPos - initPos;
+			initVel = (displacement - (0.5)*accel*(Math.pow(timeMoved, 2)))/timeMoved;
+			return true;//2
+		}
+		else if (!Double.isNaN(finalVel) && !Double.isNaN(accel) && ((!Double.isNaN(finalPos) && !Double.isNaN(initPos)) || !Double.isNaN(displacement))) {
+			if (Double.isNaN(displacement))
+				displacement = finalPos - initPos;
+			initVel = Math.sqrt(Math.pow(finalVel, 2) - 2*accel*displacement);
+			return true;//3
+		}
+		else if (!Double.isNaN(avgVel) && !Double.isNaN(finalVel)){
+			initVel = (2*avgVel) - finalVel;
+			return true;//4
+		}
+		else if (!Double.isNaN(initVel)){
+			return true;
+		}
+		else { //Could not be computed. Print needed information implement more thoroughly later
+			System.out.println("Too few argument");
+			return false;
+		}
 	}
 
 	// Kinematic Formulas (a = constant)
@@ -167,29 +167,29 @@ public class PhysPObject {
 	//4.) avgV = (v + v0) / 2 			Added
 
 	private boolean calcFinalVel() {
-		if (finalVel == Double.NaN) {
-			if (initVel != Double.NaN && accel != Double.NaN && (timeMoved != Double.NaN || (initTime != Double.NaN && finalTime != Double.NaN))) {
-				if(timeMoved == Double.NaN)
-					timeMoved = finalTime - initTime;
-				finalVel = initVel + accel*timeMoved;
-				return true;//1
-			}
-			else if (initVel != Double.NaN && accel != Double.NaN && ((finalPos != Double.NaN && initPos != Double.NaN) || displacement != Double.NaN)) {
-				if(displacement == Double.NaN)
-					displacement = finalPos - initPos;
-				finalVel = Math.sqrt(Math.pow(initVel, 2) + (2*accel*displacement));
-				return true;//3
-			}
-			else if (initVel != Double.NaN && avgVel != Double.NaN) {
-				initVel = 2*avgVel - initVel;
-				return true;//4
-			}
-			else { //Could not be computed. Print needed information implement more thoroughly later
-				System.out.println("Too few argument");
-				return false;
-			}
+		if (!Double.isNaN(initVel) && !Double.isNaN(accel) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
+			if(Double.isNaN(timeMoved))
+				timeMoved = finalTime - initTime;
+			finalVel = initVel + accel*timeMoved;
+			return true;//1
 		}
-		return true;
+		else if (!Double.isNaN(initVel) && !Double.isNaN(accel) && ((!Double.isNaN(finalPos) && !Double.isNaN(initPos)) || !Double.isNaN(displacement))) {
+			if(Double.isNaN(displacement))
+				displacement = finalPos - initPos;
+			finalVel = Math.sqrt(Math.pow(initVel, 2) + (2*accel*displacement));
+			return true;//3
+		}
+		else if (!Double.isNaN(initVel) && !Double.isNaN(avgVel)) {
+			initVel = 2*avgVel - initVel;
+			return true;//4
+		}
+		else if (!Double.isNaN(finalVel)) {
+			return true;
+		}
+		else { //Could not be computed. Print needed information implement more thoroughly later
+			System.out.println("Too few argument");
+			return false;
+		}
 	}
 
 	// Kinematic Formulas (a = constant)
@@ -200,27 +200,27 @@ public class PhysPObject {
 	//4.) avgV = (v + v0) / 2 			Added
 
 	private boolean calcInitPos() {
-		if (initPos == Double.NaN) {
-			if (displacement != Double.NaN && finalPos != Double.NaN) {
-				initPos = finalPos - displacement;
-				return true;//0
-			}
-			else if (finalPos != Double.NaN  && accel != Double.NaN && (timeMoved != Double.NaN || (initTime != Double.NaN && finalTime != Double.NaN))) {
-				if(timeMoved == Double.NaN)
-					timeMoved = finalTime - initTime;
-				initPos = finalPos - (initVel*timeMoved) - ((0.5)*accel*Math.pow(timeMoved, 2));
-				return true;//2
-			}
-			else if (finalVel != Double.NaN && initVel != Double.NaN && accel != Double.NaN && finalPos != Double.NaN) {
-				initPos = (Math.pow(initVel, 2) + (2*accel*finalPos) - Math.pow(finalVel, 2))/(2*accel);
-				return true;//3
-			}
-			else { //Could not be computed. Print needed information implement more thoroughly later
-				System.out.println("Too few argument");
-				return false;
-			}
+		if (!Double.isNaN(displacement) && !Double.isNaN(finalPos)) {
+			initPos = finalPos - displacement;
+			return true;//0
 		}
-		return true;
+		else if (!Double.isNaN(finalPos)  && !Double.isNaN(accel) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
+			if(Double.isNaN(timeMoved))
+				timeMoved = finalTime - initTime;
+			initPos = finalPos - (initVel*timeMoved) - ((0.5)*accel*Math.pow(timeMoved, 2));
+			return true;//2
+		}
+		else if (!Double.isNaN(finalVel) && !Double.isNaN(initVel) && !Double.isNaN(accel) && !Double.isNaN(finalPos)) {
+			initPos = (Math.pow(initVel, 2) + (2*accel*finalPos) - Math.pow(finalVel, 2))/(2*accel);
+			return true;//3
+		}
+		else if (!Double.isNaN(initPos)) {
+			return true;
+		}
+		else { //Could not be computed. Print needed information implement more thoroughly later
+			System.out.println("Too few argument");
+			return false;
+		}
 	}
 
 	// Kinematic Formulas (a = constant)
@@ -231,27 +231,27 @@ public class PhysPObject {
 	//4.) avgV = (v + v0) / 2 			Added
 
 	private boolean calcFinalPos() {
-		if (finalPos == Double.NaN) {
-			if (displacement != Double.NaN && initPos != Double.NaN) {
-				finalPos = initPos - displacement;
-				return true;//0
-			}
-			else if (initPos != Double.NaN  && accel != Double.NaN && (timeMoved != Double.NaN || (initTime != Double.NaN && finalTime != Double.NaN))) {
-				if(timeMoved == Double.NaN)
-					timeMoved = finalTime - initTime;
-				finalPos = initPos + (initVel*timeMoved) + ((0.5)*accel*Math.pow(timeMoved, 2));
-				return true;//2
-			}
-			else if (finalVel != Double.NaN && initVel != Double.NaN && accel != Double.NaN && initPos != Double.NaN) {
-				finalPos = (Math.pow(finalVel, 2 + (2*accel*finalPos)) - Math.pow(initVel, 2))/(2*accel);
-				return true;//3
-			}
-			else { //Could not be computed. Print needed information implement more thoroughly later
-				System.out.println("Too few argument");
-				return false;
-			}
+		if (!Double.isNaN(displacement) && !Double.isNaN(initPos)) {
+			finalPos = initPos - displacement;
+			return true;//0
 		}
-		return true;
+		else if (!Double.isNaN(initPos)  && !Double.isNaN(accel) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
+			if(Double.isNaN(timeMoved))
+				timeMoved = finalTime - initTime;
+			finalPos = initPos + (initVel*timeMoved) + ((0.5)*accel*Math.pow(timeMoved, 2));
+			return true;//2
+		}
+		else if (!Double.isNaN(finalVel) && !Double.isNaN(initVel) && !Double.isNaN(accel) && !Double.isNaN(initPos)) {
+			finalPos = (Math.pow(finalVel, 2 + (2*accel*finalPos)) - Math.pow(initVel, 2))/(2*accel);
+			return true;//3
+		}
+		else if (!Double.isNaN(finalPos)) {
+			return true;
+		}
+		else { //Could not be computed. Print needed information implement more thoroughly later
+			System.out.println("Too few argument");
+			return false;
+		}
 	}
 
 	// Kinematic Formulas (a = constant)
@@ -262,31 +262,37 @@ public class PhysPObject {
 	//4.) avgV = (v + v0) / 2 			Added
 	
 	private boolean calcDisplacement() {
-		if (displacement == Double.NaN) {
-			if (initPos != Double.NaN && finalPos != Double.NaN) {
-				displacement = finalPos - initPos;
-				return true;//0				
-			}
-			else if (initVel != Double.NaN && (timeMoved != Double.NaN || (initTime != Double.NaN && finalTime != Double.NaN)) && accel != Double.NaN) {
-				displacement = initVel*timeMoved + (0.5)*accel*Math.pow(timeMoved, 2);
-				return true;//2
-			}
-			else if (finalVel != Double.NaN && initVel != Double.NaN && accel != Double.NaN) {
-				displacement = (Math.pow(finalVel, 2) - Math.pow(initVel, 2))/(2*accel);
-				return true;
-			}
-			else { //Could not be computed. Print needed information implement more thoroughly later
-				System.out.println("Too few argument");
-				return false;
-			}
+		if (!Double.isNaN(initPos) && !Double.isNaN(finalPos)) {
+			displacement = finalPos - initPos;
+			System.out.println("YaY");
+			return true;//0				
 		}
-		return true;
+		else if (!Double.isNaN(initVel) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime))) && !Double.isNaN(accel)) {
+			displacement = initVel*timeMoved + (0.5)*accel*Math.pow(timeMoved, 2);
+			System.out.println("YaY1");
+			return true;//2
+		}
+		else if (!Double.isNaN(finalVel) && !Double.isNaN(initVel) && !Double.isNaN(accel)) {
+			displacement = (Math.pow(finalVel, 2) - Math.pow(initVel, 2))/(2*accel);
+			System.out.println("YaY2");
+			return true;//3
+		}
+		else if (!Double.isNaN(displacement)) {
+			return true;
+		}
+
+		else { //Could not be computed. Print needed information implement more thoroughly later
+			System.out.println("Too few argument");
+			System.out.println("YaY3");
+			return false;
+		}
 	}
+	
 	private boolean calcInitTime() {
-		if (initTime == Double.NaN) {
+		if (Double.isNaN(initTime)) {
 			boolean valid = calcTimeMoved();
 			if(valid == true){
-				if(finalTime != Double.NaN)
+				if(!Double.isNaN(finalTime))
 					initTime = finalTime - timeMoved;
 				else
 					initTime = timeMoved;
@@ -302,10 +308,10 @@ public class PhysPObject {
 		//3.) v^2 = v0^2 + 2*a*(x - x0)
 		//4.) avgV = (v + v0) / 2 			Added
 	private boolean calcFinalTime() {
-		if (finalTime == Double.NaN) {
+		if (Double.isNaN(finalTime)) {
 			boolean valid = calcTimeMoved();
 			if(valid == true){
-				if(initTime != Double.NaN)
+				if(!Double.isNaN(initTime))
 					finalTime = timeMoved + initTime;
 				else
 					finalTime = timeMoved;
@@ -321,29 +327,29 @@ public class PhysPObject {
 	//3.) v^2 = v0^2 + 2*a*(x - x0)
 	//4.) avgV = (v + v0) / 2 			Added
 	private boolean calcAccel() {
-		if (accel == Double.NaN) {
-			if (initVel != Double.NaN && finalVel != Double.NaN &&  (timeMoved != Double.NaN || (initTime != Double.NaN && finalTime != Double.NaN))) {
-				if(timeMoved == Double.NaN)
-					timeMoved = finalTime - initTime;
-				accel = (finalVel-initVel)/timeMoved;
-				return true;//0
-			}
-			else if(initVel != Double.NaN && initPos != Double.NaN && finalPos != Double.NaN  && (timeMoved != Double.NaN || (initTime != Double.NaN && finalTime != Double.NaN)) ){
-				if(timeMoved == Double.NaN)
-					timeMoved = finalTime - initTime;
-				accel = (2*(finalPos-initPos-(timeMoved*initVel)))/Math.pow(timeMoved, 2);
-				return true;//2
-			}
-			else if(initVel != Double.NaN && initPos != Double.NaN && finalPos != Double.NaN  && finalVel != Double.NaN){
-				accel = ((finalVel*finalVel)-(initVel*initVel))/(2*(finalPos-initPos));
-				return true;//3
-			}
-			else { //Could not be computed. Print needed information implement more thoroughly later
-				System.out.println("Too few argument");
-				return false;
-			}
+		if (!Double.isNaN(initVel) && !Double.isNaN(finalVel) &&  (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
+			if(Double.isNaN(timeMoved))
+				timeMoved = finalTime - initTime;
+			accel = (finalVel-initVel)/timeMoved;
+			return true;//0
 		}
-		return true;
+		else if(!Double.isNaN(initVel) && !Double.isNaN(initPos) && !Double.isNaN(finalPos)  && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime))) ){
+			if(Double.isNaN(timeMoved))
+				timeMoved = finalTime - initTime;
+			accel = (2*(finalPos-initPos-(timeMoved*initVel)))/Math.pow(timeMoved, 2);
+			return true;//2
+		}
+		else if(!Double.isNaN(initVel) && !Double.isNaN(initPos) && !Double.isNaN(finalPos)  && !Double.isNaN(finalVel)){
+			accel = ((finalVel*finalVel)-(initVel*initVel))/(2*(finalPos-initPos));
+			return true;//3
+		}
+		else if (!Double.isNaN(accel)) {
+			return true;
+		}
+		else { //Could not be computed. Print needed information implement more thoroughly later
+			System.out.println("Too few argument");
+			return false;
+		}
 	}
 	// Kinematic Formulas (a = constant)
 	//0.) displacement = x - x0
@@ -352,24 +358,24 @@ public class PhysPObject {
 	//3.) v^2 = v0^2 + 2*a*(x - x0)
 	//4.) avgV = (v + v0) / 2 
 	private boolean calcTimeMoved() {
-		if (timeMoved == Double.NaN) {
-			if(initTime != Double.NaN && finalTime != Double.NaN){
+			if(!Double.isNaN(initTime) && !Double.isNaN(finalTime)){
 				timeMoved = finalTime - initTime;
 				return true;
 			}
-			else if (initVel != Double.NaN && accel != Double.NaN && finalVel != Double.NaN) {
+			else if (!Double.isNaN(initVel) && !Double.isNaN(accel) && !Double.isNaN(finalVel)) {
 				timeMoved = (finalVel-initVel)/accel;
 				return true;//1
 			}
-			else if (initVel != Double.NaN && accel != Double.NaN && initPos != Double.NaN && finalPos != Double.NaN) {
+			else if (!Double.isNaN(initVel) && !Double.isNaN(accel) && !Double.isNaN(initPos) && !Double.isNaN(finalPos)) {
 				timeMoved = ((Math.sqrt(Math.pow(initVel,2) + 2*accel*(finalPos - initPos))-initVel)/accel);
 				return true;//2 
+			}
+			else if (!Double.isNaN(timeMoved)) {
+				return true;
 			}
 			else { //Could not be computed. Print needed information implement more thoroughly later
 				System.out.println("Too few argument");
 				return false;
 			}
-		}
-		return true;
 	}
 }
