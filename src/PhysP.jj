@@ -45,12 +45,20 @@ TOKEN : /* Keywords */
 
 TOKEN: /* Objects and Vectors */
 {
-  
   < OBJECT : "object" | "vector" >
 | < ATTRIBUTE : "acceleration" | "initial velocity" | "initial position" | "final velocity"
-			  | "final position" | "mass" | "time moved" | "x component" | "y component"
+			  | "final position" | "time moved" | "x component" | "y component"
 			  | "angle" | "magnitude" | "displacement" | "initial time" | "final time" | "average velocity" >
 | < ID: ["a"-"z","A"-"Z","_"](["a"-"z","A"-"Z","_","0"-"9"])* >}
+
+TOKEN: /* Measurements */
+{	< MEASUREMENT :  <FORCEMEASURE> | <ACCELMEASURE> | <VELMEASURE> | <DISTANCEMEASURE> | <TIMEMEASURE> >
+|   < #FORCEMEASURE : "N" | "pound" >
+|   < #ACCELMEASURE: "cm/s^2" | "m/s^2" | "ft/s^2" | "ft/min^2" | "mile/hr^2" | "km/hr^2" >
+|   < #VELMEASURE: "cm/s" | "m/s" | "ft/s" | "ft/min" | "mile/hr" | "km/hr" >
+| 	< #DISTANCEMEASURE: "cm" | "m" | "km" | "mile" >
+| 	< #TIMEMEASURE : "s" | "min" | "hr" >
+}
 
 TOKEN: /* Doubles */
 {
@@ -67,7 +75,7 @@ boolean read(HashMap variables):
 |   <EOF> { return false; }}
 
 void Statement(HashMap variables):{
-  Token obj=null, ident=null, attr=null, val=null, eql=null;
+  Token obj=null, ident=null, attr=null, val=null, msr=null, eql=null;
 }
 {
   "define "ident=<ID>" as "obj=<OBJECT>  {
@@ -108,11 +116,19 @@ void Statement(HashMap variables):{
         result = physpVector.getVariable(attr.image);
 		variables.put(ident.image, physpVector);
       }
-      if(result != Double.NaN) {		System.out.println(result);
+      if(!Double.isNaN(result)) {		System.out.println(result);
       }
     }
     else {
       System.out.println("Invalid identifier.");
+    }  }
+|
+  "remove " ident=<ID>
+  {
+    if(variables.containsKey(ident.image)) {
+      variables.remove(ident.image);
+    }
+    else {		System.out.println("Invalid identifier.");
     }  }
 |
   <QUESTION> ident=<ID> attr=<ATTRIBUTE> eql=<EQUALLITY> val=<DOUBLE>  {
@@ -128,7 +144,7 @@ void Statement(HashMap variables):{
 		variables.put(ident.image, physpVector);
       }
       
-      if(result != Double.NaN) {
+      if(!Double.isNaN(result)) {
 		if(eql.image.equals("equal to")) {			if(result == Double.parseDouble(val.image)) {
 				System.out.println("True.");
         	}

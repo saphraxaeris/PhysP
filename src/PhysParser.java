@@ -38,13 +38,14 @@ public class PhysParser implements PhysParserConstants {
     case DEFINE:
     case QUESTION:
     case ID:
-    case 31:
+    case 37:
+    case 38:
       label_1:
       while (true) {
         Statement(variables);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 29:
-          jj_consume_token(29);
+        case 35:
+          jj_consume_token(35);
           break;
         default:
           jj_la1[0] = jj_gen;
@@ -54,7 +55,8 @@ public class PhysParser implements PhysParserConstants {
         case DEFINE:
         case QUESTION:
         case ID:
-        case 31:
+        case 37:
+        case 38:
           ;
           break;
         default:
@@ -77,7 +79,7 @@ public class PhysParser implements PhysParserConstants {
   }
 
   static final public void Statement(HashMap variables) throws ParseException {
-  Token obj=null, ident=null, attr=null, val=null, eql=null;
+  Token obj=null, ident=null, attr=null, val=null, msr=null, eql=null;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case DEFINE:
       jj_consume_token(DEFINE);
@@ -96,7 +98,7 @@ public class PhysParser implements PhysParserConstants {
       break;
     case ID:
       ident = jj_consume_token(ID);
-      jj_consume_token(30);
+      jj_consume_token(36);
       attr = jj_consume_token(ATTRIBUTE);
       val = jj_consume_token(DOUBLE);
     if(variables.containsKey(ident.image)) {
@@ -115,8 +117,8 @@ public class PhysParser implements PhysParserConstants {
       System.out.println("Invalid identifier.");
     }
       break;
-    case 31:
-      jj_consume_token(31);
+    case 37:
+      jj_consume_token(37);
       ident = jj_consume_token(ID);
       attr = jj_consume_token(ATTRIBUTE);
     if(variables.containsKey(ident.image)) {
@@ -131,12 +133,22 @@ public class PhysParser implements PhysParserConstants {
         result = physpVector.getVariable(attr.image);
                 variables.put(ident.image, physpVector);
       }
-      if(result != Double.NaN) {
+      if(!Double.isNaN(result)) {
                 System.out.println(result);
       }
     }
     else {
       System.out.println("Invalid identifier.");
+    }
+      break;
+    case 38:
+      jj_consume_token(38);
+      ident = jj_consume_token(ID);
+    if(variables.containsKey(ident.image)) {
+      variables.remove(ident.image);
+    }
+    else {
+                System.out.println("Invalid identifier.");
     }
       break;
     case QUESTION:
@@ -158,7 +170,7 @@ public class PhysParser implements PhysParserConstants {
                 variables.put(ident.image, physpVector);
       }
 
-      if(result != Double.NaN) {
+      if(!Double.isNaN(result)) {
                 if(eql.image.equals("equal to")) {
                         if(result == Double.parseDouble(val.image)) {
                                 System.out.println("True.");
@@ -232,11 +244,16 @@ public class PhysParser implements PhysParserConstants {
   static private int jj_gen;
   static final private int[] jj_la1 = new int[4];
   static private int[] jj_la1_0;
+  static private int[] jj_la1_1;
   static {
       jj_la1_init_0();
+      jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x20000000,0x82001040,0x82401041,0x82001040,};
+      jj_la1_0 = new int[] {0x0,0x2001040,0x2401041,0x2001040,};
+   }
+   private static void jj_la1_init_1() {
+      jj_la1_1 = new int[] {0x8,0x60,0x60,0x60,};
    }
 
   /** Constructor with InputStream. */
@@ -374,7 +391,7 @@ public class PhysParser implements PhysParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[32];
+    boolean[] la1tokens = new boolean[39];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -385,10 +402,13 @@ public class PhysParser implements PhysParserConstants {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
             la1tokens[j] = true;
           }
+          if ((jj_la1_1[i] & (1<<j)) != 0) {
+            la1tokens[32+j] = true;
+          }
         }
       }
     }
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < 39; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
