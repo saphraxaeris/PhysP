@@ -111,7 +111,7 @@ public class PhysPObject {
 	//4.) avgV = (v + v0) / 2 			Added
 
 	private boolean calcInitVel() {
-		if (!Double.isNaN(finalPos) && !Double.isNaN(accel) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
+		if (!Double.isNaN(finalVel) && !Double.isNaN(accel) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
 			if(Double.isNaN(timeMoved))
 				timeMoved = finalTime - initTime;
 			initVel = finalVel - (accel*timeMoved);
