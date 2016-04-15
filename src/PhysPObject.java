@@ -365,6 +365,16 @@ public class PhysPObject {
 	}
 
 	private boolean calcAvgVel() {
+		
+		if (((!Double.isNaN(finalPos) && !Double.isNaN(initPos)) || !Double.isNaN(displacement)) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
+			if(Double.isNaN(displacement))
+				displacement = finalPos - initPos;
+			if(Double.isNaN(timeMoved))
+				timeMoved = finalTime - initTime;
+			avgVel = displacement/timeMoved;
+			return true;
+		}
+		
 		boolean tmp1 = calcInitVel();
 		boolean tmp2 = calcFinalVel();
 
