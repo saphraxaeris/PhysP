@@ -28,7 +28,7 @@ public class PhysPVector {
 			magnitude = d;
 			break;
 		case "angle":
-			angle = d;
+			angle = d*(Math.PI/180.0);// Change to radians
 			break;
 		}
 	}
@@ -51,7 +51,7 @@ public class PhysPVector {
 			return magnitude;
 		case "angle":
 			calcAngle();
-			return angle;
+			return angle*(180.0/Math.PI); // Change back to degrees
 		default:
 			return 0;
 		}
