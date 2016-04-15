@@ -171,9 +171,6 @@ public class PhysPObject {
 		else if (!Double.isNaN(finalVel)) {
 			return true;
 		}
-		else if (!Double.isNaN(finalVel)) {
-			return true;
-		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
 			System.out.println("Too few argument");
 			return false;
@@ -368,15 +365,19 @@ public class PhysPObject {
 	}
 
 	private boolean calcAvgVel() {
-		if(Double.isNaN(avgVel)) {
-			boolean tmp1 = calcInitVel();
-			boolean tmp2 = calcFinalVel();
-			if(tmp1 && tmp2) {
-				avgVel = (initVel + finalVel) / 2;
-				return true;
-			}
+		boolean tmp1 = calcInitVel();
+		boolean tmp2 = calcFinalVel();
+
+		if(tmp1 && tmp2) {
+			avgVel = (initVel + finalVel) / 2;
+			return true;
+		}
+		else if(!Double.isNaN(avgVel)) {
+			return true;
+		}
+		else { //Could not be computed. Print needed information implement more thoroughly later
+			System.out.println("Too few argument");
 			return false;
 		}
-		return true;
 	}
 }
