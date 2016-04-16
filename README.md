@@ -35,10 +35,13 @@
 
 ##Requiremnts
 1. Have Java installed on your machine, found [here](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+
 > To verify installation write the following in a terminal or command prompt
+
 ```bash
 $ java -version
 ```
+
 >If installed your Java version will appear
 
 ##Building
