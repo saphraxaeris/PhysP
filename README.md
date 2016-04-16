@@ -21,7 +21,7 @@
 * Acceleration
 
 ###Commands
-*  Create objects or vectors
+*  Create objects or vectors <br />
 `define <name> as <datatype>`
 *  Assign attributes to objects
 `<name> with <attribute> <value>`
