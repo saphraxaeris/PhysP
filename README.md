@@ -55,3 +55,8 @@ javac *.java
 ```bash
 java PhysParser
 ```
+
+##Authors
+* Stephan Elias Remy
+* Mario Orbegoso
+* Giovanni Gardon
