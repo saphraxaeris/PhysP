@@ -1,14 +1,15 @@
 #PhysP
 > A programming language for solving basic physic problems.
 
-##Documentation
-###Data Types
-####Vector
+## Documentation
+### Data Types
+#### Vector
 * Magnitude
 * Angle
 * X Component
 * Y Component
-####Object
+
+#### Object
 * Initial Position
 * Final Position
 * Displacement
@@ -20,7 +21,7 @@
 * Time Moved
 * Acceleration
 
-###Commands
+### Commands
 *  Create objects or vectors <br />
 `define <name> as <datatype>`
 *  Assign attributes to objects <br />
