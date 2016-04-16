@@ -1,35 +1,35 @@
 #PhysP
-A programming language for solving basic physic problems.
+> A programming language for solving basic physic problems.
 
 ##Documentation
 ###Data Types
 ####Vector
->Magnitude
->Angle
->X Component
->Y Component
+* Magnitude
+* Angle
+* X Component
+* Y Component
 ####Object
->Initial Position
->Final Position
->Displacement
->Initial Velocity
->Final Velocity
->Average Velocity
->Initial Time
->Final Time
->Time Moved
->Acceleration
+* Initial Position
+* Final Position
+* Displacement
+* Initial Velocity
+* Final Velocity
+* Average Velocity
+* Initial Time
+* Final Time
+* Time Moved
+* Acceleration
 
 ###Commands
-> Create objects or vectors
+*  Create objects or vectors
 `define <name> as <datatype>`
-> Assign attributes to objects
+*  Assign attributes to objects
 `<name> with <attribute> <value>`
->Display or calculate attributes of objects
+* Display or calculate attributes of objects
 `return <name> <attribute>`
->Make comparisons between object attribute and value
+* Make comparisons between object attribute and value
 `is <name> <attribute> <comparison> <value>`
->Remove previously declared objects
+* Remove previously declared objects
 `remove <name>`
 
 ##Requiremnts
@@ -52,4 +52,4 @@ javac *.java
 3. Run the following command to run the language in the terminal or command prompt
 ```bash
 java PhysParser
-```# PhysP
+```
