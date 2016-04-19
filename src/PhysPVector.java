@@ -73,9 +73,9 @@ public class PhysPVector {
 					return true;
 				}
 				if (!Double.isNaN(magnitude)) {
-					System.out.println("Too few arguments: Y Component or Angle is needed.");
+					System.out.println(ColorCodes.RED + "Too few arguments: Y Component or Angle is needed." + ColorCodes.RESET);
 				} else {
-					System.out.println("Too few arguments: Magnitude is needed.");
+					System.out.println(ColorCodes.RED + "Too few arguments: Magnitude is needed." + ColorCodes.RESET);
 				}
 				return false;
 			}
@@ -93,9 +93,9 @@ public class PhysPVector {
 					return true;
 				}
 				if (!Double.isNaN(magnitude)) {
-					System.out.println("Too few arguments: X Component or Angle is needed.");
+					System.out.println(ColorCodes.RED + "Too few arguments: X Component or Angle is needed." + ColorCodes.RESET);
 				} else {
-					System.out.println("Too few arguments: Magnitude is needed.");
+					System.out.println(ColorCodes.RED + "Too few arguments: Magnitude is needed." + ColorCodes.RESET);
 				}
 				return false;
 			}
@@ -119,10 +119,10 @@ public class PhysPVector {
 					return true;
 				}
 				if(Double.isNaN(angle)) {
-					System.out.println("Too few arguments: Angle is needed.");
+					System.out.println(ColorCodes.RED + "Too few arguments: Angle is needed." + ColorCodes.RESET);
 				}
 				else {
-					System.out.println("Too few arguments: X or Y component is needed.");
+					System.out.println(ColorCodes.RED + "Too few arguments: X or Y component is needed." + ColorCodes.RESET);
 				}
 				return false;
 			}
@@ -148,10 +148,10 @@ public class PhysPVector {
 					return true;
 				}
 				if(!Double.isNaN(magnitude)) {
-					System.out.println("Too few arguments: X or Y component is needed.");
+					System.out.println(ColorCodes.RED + "Too few arguments: X or Y component is needed." + ColorCodes.RESET);
 				}
 				else {
-					System.out.println("Too few arguments: Magnitude is needed.");
+					System.out.println(ColorCodes.RED + "Too few arguments: Magnitude is needed." + ColorCodes.RESET);
 				}
 				return false;
 			}

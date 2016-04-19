@@ -139,7 +139,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println("Too few argument");
+			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
 			return false;
 		}
 	}
@@ -172,7 +172,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println("Too few argument");
+			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
 			return false;
 		}
 	}
@@ -203,7 +203,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println("Too few argument");
+			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
 			return false;
 		}
 	}
@@ -234,7 +234,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println("Too few argument");
+			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
 			return false;
 		}
 	}
@@ -263,7 +263,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println("Too few argument");
+			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
 			return false;
 		}
 	}
@@ -330,7 +330,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println("Too few argument");
+			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
 			return false;
 		}
 	}
@@ -359,7 +359,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println("Too few argument");
+			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
 			return false;
 		}
 	}
@@ -386,7 +386,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println("Too few argument");
+			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
 			return false;
 		}
 	}

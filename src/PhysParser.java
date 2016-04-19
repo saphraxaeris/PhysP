@@ -103,20 +103,55 @@ public class PhysParser implements PhysParserConstants {
       val = jj_consume_token(DOUBLE);
       msr = jj_consume_token(MEASUREMENT);
     if(variables.containsKey(ident.image)) {
+      double result = Double.NaN;
+          double temp = Double.parseDouble(val.image);
           if(variables.get(ident.image) instanceof PhysPObject) {
-
-        PhysPObject physpObject = (PhysPObject) variables.get(ident.image);
-        physpObject.setVariable(Double.parseDouble(val.image), attr.image);
-                variables.put(ident.image, physpObject);
+            if(attr.image.contains("position") || attr.image.equals("displacement")){
+                  result = Converter.Distance(msr.image, "m", temp);
+            }
+            else if (attr.image.contains("velocity")){
+                  result = Converter.Velocity(msr.image, "m/s", temp);
+            }
+            else if (attr.image.contains("time")){
+                  result = Converter.Time(msr.image, "s", temp);
+            }
+            else if (attr.image.equals("acceleration")){
+                  result = Converter.Acceleration(msr.image, "m/s^2", temp);
+            }
+            else {
+                        System.out.println(ColorCodes.RED + "Invalid mesurement for data type." + ColorCodes.RESET);
+            }
+            if(!Double.isNaN(result)) {
+              PhysPObject physpObject = (PhysPObject) variables.get(ident.image);
+          physpObject.setVariable(result, attr.image);
+                  variables.put(ident.image, physpObject);
+            }
+            else {
+                  System.out.println(ColorCodes.RED + "Cannot perform conversion for specified attribute." + ColorCodes.RESET);
+            }
       }
       else if(variables.get(ident.image) instanceof PhysPVector) {
-                PhysPVector physpVector = (PhysPVector) variables.get(ident.image);
-        physpVector.setVariable(Double.parseDouble(val.image), attr.image);
-                variables.put(ident.image, physpVector);
+        if(attr.image.equals("magnitude") || attr.image.contains("component")){
+                  result = Converter.Force(msr.image, "N", temp);
+            }
+            else if (attr.image.equals("angle")){
+                  result = Converter.Angle(msr.image, "degrees", temp);
+            }
+            else {
+                        System.out.println(ColorCodes.RED + "Invalid mesurement for data type." + ColorCodes.RESET);
+            }
+                if(!Double.isNaN(result)) {
+                  PhysPVector physpVector = (PhysPVector) variables.get(ident.image);
+          physpVector.setVariable(result, attr.image);
+                  variables.put(ident.image, physpVector);
+                }
+                else {
+                  System.out.println(ColorCodes.RED + "Cannot perform conversion for specified attribute." + ColorCodes.RESET);
+            }
       }
     }
     else {
-      System.out.println("Invalid identifier.");
+      System.out.println(ColorCodes.RED + "Invalid identifier." + ColorCodes.RESET);
     }
       break;
     case 38:
@@ -125,23 +160,63 @@ public class PhysParser implements PhysParserConstants {
       attr = jj_consume_token(ATTRIBUTE);
       msr = jj_consume_token(MEASUREMENT);
     if(variables.containsKey(ident.image)) {
+      double temp = Double.NaN;
       double result = Double.NaN;
           if(variables.get(ident.image) instanceof PhysPObject) {
         PhysPObject physpObject = (PhysPObject)variables.get(ident.image);
-        result = physpObject.getVariable(attr.image);
-            variables.put(ident.image, physpObject);
+        temp = physpObject.getVariable(attr.image);
+        if(!Double.isNaN(temp)) {
+                        variables.put(ident.image, physpObject);
+                        if(attr.image.contains("position") || attr.image.equals("displacement")){
+                                result = Converter.Distance("m", msr.image, temp);
+                }
+                else if (attr.image.contains("velocity")){
+                                result = Converter.Velocity("m/s", msr.image, temp);
+                }
+                else if (attr.image.contains("time")){
+                                result = Converter.Time("s", msr.image, temp);
+                }
+                else if (attr.image.equals("acceleration")){
+                        result = Converter.Acceleration("m/s^2", msr.image, temp);
+                }
+                else {
+                                System.out.println(ColorCodes.RED + "Invalid mesurement for data type." + ColorCodes.RESET);
+                }
+                if(!Double.isNaN(result)) {
+                        variables.put(ident.image, physpObject);
+                                System.out.println(result);
+                }
+                else {
+                                System.out.println(ColorCodes.RED + "Cannot perform conversion for specified attribute." + ColorCodes.RESET);
+                        }
+        }
       }
       else if(variables.get(ident.image) instanceof PhysPVector) {
                 PhysPVector physpVector = (PhysPVector)variables.get(ident.image);
-        result = physpVector.getVariable(attr.image);
-                variables.put(ident.image, physpVector);
-      }
-      if(!Double.isNaN(result)) {
-                System.out.println(result);
+        temp = physpVector.getVariable(attr.image);
+                if(!Double.isNaN(temp)) {
+                        variables.put(ident.image, physpVector);
+                        if(attr.image.equals("magnitude") || attr.image.contains("component")){
+                                result = Converter.Force("N", msr.image, temp);
+                }
+                else if (attr.image.equals("angle")){
+                                result = Converter.Angle("degrees", msr.image, temp);
+                }
+                        else {
+                                System.out.println(ColorCodes.RED + "Invalid mesurement for data type." + ColorCodes.RESET);
+                }
+                if(!Double.isNaN(result)) {
+                        variables.put(ident.image, physpVector);
+                                System.out.println(result);
+                }
+                else {
+                                System.out.println(ColorCodes.RED + "Cannot perform conversion for specified attribute." + ColorCodes.RESET);
+                        }
+                }
       }
     }
     else {
-      System.out.println("Invalid identifier.");
+      System.out.println(ColorCodes.RED + "Invalid identifier." + ColorCodes.RESET);
     }
       break;
     case 39:
@@ -151,7 +226,7 @@ public class PhysParser implements PhysParserConstants {
       variables.remove(ident.image);
     }
     else {
-                System.out.println("Invalid identifier.");
+                System.out.println(ColorCodes.RED + "Invalid identifier." + ColorCodes.RESET);
     }
       break;
     case QUESTION:
@@ -176,56 +251,56 @@ public class PhysParser implements PhysParserConstants {
       if(!Double.isNaN(result)) {
                 if(eql.image.equals("equal to")) {
                         if(result == Double.parseDouble(val.image)) {
-                                System.out.println("True.");
+                                System.out.println(ColorCodes.CYAN + "True." + ColorCodes.RESET);
                 }
                 else {
-                                System.out.println("False.");
+                                System.out.println(ColorCodes.CYAN + "True." + ColorCodes.RESET);
                 }
                 }
                 else if (eql.image.equals("not equal to")) {
                         if(result == Double.parseDouble(val.image)) {
-                                System.out.println("False.");
+                                System.out.println(ColorCodes.CYAN + "True." + ColorCodes.RESET);
                 }
                 else {
-                                System.out.println("True.");
+                                System.out.println(ColorCodes.CYAN + "True." + ColorCodes.RESET);
                 }
                 }
                 else if (eql.image.equals("greater than")) {
                   if(result > Double.parseDouble(val.image)) {
-                                System.out.println("True.");
+                                System.out.println(ColorCodes.CYAN + "True." + ColorCodes.RESET);
                 }
                 else {
-                                System.out.println("False.");
+                                System.out.println(ColorCodes.CYAN + "True." + ColorCodes.RESET);
                 }
                 }
                 else if (eql.image.equals("less than")) {
                   if(result < Double.parseDouble(val.image)) {
-                                System.out.println("True.");
+                                System.out.println(ColorCodes.CYAN + "True." + ColorCodes.RESET);
                 }
                 else {
-                                System.out.println("False.");
+                                System.out.println(ColorCodes.CYAN + "True." + ColorCodes.RESET);
                 }
                 }
                 else if (eql.image.equals("greater than or equal to")) {
                   if(result >= Double.parseDouble(val.image)) {
-                                System.out.println("True.");
+                                System.out.println(ColorCodes.CYAN + "True." + ColorCodes.RESET);
                 }
                 else {
-                                System.out.println("False.");
+                                System.out.println(ColorCodes.CYAN + "True." + ColorCodes.RESET);
                 }
                 }
                 else if (eql.image.equals("less than or equal to")) {
                   if(result <= Double.parseDouble(val.image)) {
-                                System.out.println("True.");
+                                System.out.println(ColorCodes.CYAN + "True." + ColorCodes.RESET);
                 }
                 else {
-                                System.out.println("False.");
+                                System.out.println(ColorCodes.CYAN + "True." + ColorCodes.RESET);
                 }
                 }
       }
     }
     else {
-      System.out.println("Invalid identifier.");
+      System.out.println(ColorCodes.RED + "Invalid identifier." + ColorCodes.RESET);
     }
       break;
     default:
