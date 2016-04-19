@@ -45,17 +45,19 @@ $ java -version
 >If installed your Java version will appear
 
 ##Building
-1. Open a terminal or command prompt on the folder where the .jj file is along with the javacc.jar file is.
-2. Run these commands to build the language
+1. Extract project folder.
+2. Open a terminal or command prompt inside project folder.
+3. Run these commands to build the language.
 ```bash
-java -cp "path to javacc.jar" javacc "path to PhysP.jj"
+cd src
+java -cp javacc.jar javacc PhysP.jj
 ```
 ```bash
 javac *.java
 ```
 
 ##Running
-1. Run the following command to run the language in the terminal or command prompt
+1. Run the following command to run the language in the terminal or command prompt.
 ```bash
 java PhysParser
 ```
