@@ -42,7 +42,17 @@ TOKEN : /* Keywords */
 | < WITH : "with" >
 | < RETURN : "return" >
 | < TERMINATE : "terminate">}
-
+
+TOKEN: /* Measurements */
+{
+	< MEASUREMENT :  <FORCEMEASURE> | <ACCELMEASURE> | <VELMEASURE> | <DISTANCEMEASURE> | <TIMEMEASURE> >
+|   < #FORCEMEASURE : "N" | "pound" >
+|   < #ACCELMEASURE: "cm/s^2" | "m/s^2" | "ft/s^2" | "ft/min^2" | "mile/hr^2" | "km/hr^2" >
+|   < #VELMEASURE: "cm/s" | "m/s" | "ft/s" | "ft/min" | "mile/hr" | "km/hr" >
+| 	< #DISTANCEMEASURE: "cm" | "m" | "km" | "mile" >
+| 	< #TIMEMEASURE : "s" | "min" | "hr" >
+|   < #ANGLEMEASURE : "degress" | "radians" >
+}
 TOKEN: /* Objects and Vectors */
 {
   < OBJECT : "object" | "vector" >
@@ -51,14 +61,6 @@ TOKEN: /* Objects and Vectors */
 			  | "angle" | "magnitude" | "displacement" | "initial time" | "final time" | "average velocity" >
 | < ID: ["a"-"z","A"-"Z","_"](["a"-"z","A"-"Z","_","0"-"9"])* >}
 
-TOKEN: /* Measurements */
-{	< MEASUREMENT :  <FORCEMEASURE> | <ACCELMEASURE> | <VELMEASURE> | <DISTANCEMEASURE> | <TIMEMEASURE> >
-|   < #FORCEMEASURE : "N" | "pound" >
-|   < #ACCELMEASURE: "cm/s^2" | "m/s^2" | "ft/s^2" | "ft/min^2" | "mile/hr^2" | "km/hr^2" >
-|   < #VELMEASURE: "cm/s" | "m/s" | "ft/s" | "ft/min" | "mile/hr" | "km/hr" >
-| 	< #DISTANCEMEASURE: "cm" | "m" | "km" | "mile" >
-| 	< #TIMEMEASURE : "s" | "min" | "hr" >
-}
 
 TOKEN: /* Doubles */
 {
@@ -86,8 +88,9 @@ void Statement(HashMap variables):{
     else {
       System.out.println("Invalid data type.");    }  }
 |
-  ident=<ID> " with " attr=<ATTRIBUTE> val=<DOUBLE>  {
+  ident=<ID> " with " attr=<ATTRIBUTE> val=<DOUBLE> msr=<MEASUREMENT>  {
     if(variables.containsKey(ident.image)) {	  if(variables.get(ident.image) instanceof PhysPObject) {
+	    
         PhysPObject physpObject = (PhysPObject) variables.get(ident.image);
         physpObject.setVariable(Double.parseDouble(val.image), attr.image);
 		variables.put(ident.image, physpObject);
@@ -103,7 +106,7 @@ void Statement(HashMap variables):{
     }
   }
 |
-  "return " ident=<ID> attr=<ATTRIBUTE>
+  "return " ident=<ID> attr=<ATTRIBUTE> msr=<MEASUREMENT>
   {
     if(variables.containsKey(ident.image)) {
       double result = Double.NaN;	  if(variables.get(ident.image) instanceof PhysPObject) {

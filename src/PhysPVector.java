@@ -1,3 +1,4 @@
+import javafx.beans.binding.When.StringConditionBuilder;
 
 public class PhysPVector {
 	private double xComponent = Double.NaN;

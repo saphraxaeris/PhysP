@@ -38,14 +38,14 @@ public class PhysParser implements PhysParserConstants {
     case DEFINE:
     case QUESTION:
     case ID:
-    case 37:
     case 38:
+    case 39:
       label_1:
       while (true) {
         Statement(variables);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 35:
-          jj_consume_token(35);
+        case 36:
+          jj_consume_token(36);
           break;
         default:
           jj_la1[0] = jj_gen;
@@ -55,8 +55,8 @@ public class PhysParser implements PhysParserConstants {
         case DEFINE:
         case QUESTION:
         case ID:
-        case 37:
         case 38:
+        case 39:
           ;
           break;
         default:
@@ -98,11 +98,13 @@ public class PhysParser implements PhysParserConstants {
       break;
     case ID:
       ident = jj_consume_token(ID);
-      jj_consume_token(36);
+      jj_consume_token(37);
       attr = jj_consume_token(ATTRIBUTE);
       val = jj_consume_token(DOUBLE);
+      msr = jj_consume_token(MEASUREMENT);
     if(variables.containsKey(ident.image)) {
           if(variables.get(ident.image) instanceof PhysPObject) {
+
         PhysPObject physpObject = (PhysPObject) variables.get(ident.image);
         physpObject.setVariable(Double.parseDouble(val.image), attr.image);
                 variables.put(ident.image, physpObject);
@@ -117,10 +119,11 @@ public class PhysParser implements PhysParserConstants {
       System.out.println("Invalid identifier.");
     }
       break;
-    case 37:
-      jj_consume_token(37);
+    case 38:
+      jj_consume_token(38);
       ident = jj_consume_token(ID);
       attr = jj_consume_token(ATTRIBUTE);
+      msr = jj_consume_token(MEASUREMENT);
     if(variables.containsKey(ident.image)) {
       double result = Double.NaN;
           if(variables.get(ident.image) instanceof PhysPObject) {
@@ -141,8 +144,8 @@ public class PhysParser implements PhysParserConstants {
       System.out.println("Invalid identifier.");
     }
       break;
-    case 38:
-      jj_consume_token(38);
+    case 39:
+      jj_consume_token(39);
       ident = jj_consume_token(ID);
     if(variables.containsKey(ident.image)) {
       variables.remove(ident.image);
@@ -250,10 +253,10 @@ public class PhysParser implements PhysParserConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x0,0x2001040,0x2401041,0x2001040,};
+      jj_la1_0 = new int[] {0x0,0x1040,0x401041,0x1040,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x8,0x60,0x60,0x60,};
+      jj_la1_1 = new int[] {0x10,0xc1,0xc1,0xc1,};
    }
 
   /** Constructor with InputStream. */
@@ -391,7 +394,7 @@ public class PhysParser implements PhysParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[39];
+    boolean[] la1tokens = new boolean[40];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -408,7 +411,7 @@ public class PhysParser implements PhysParserConstants {
         }
       }
     }
-    for (int i = 0; i < 39; i++) {
+    for (int i = 0; i < 40; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
