@@ -184,7 +184,7 @@ public class PhysParser implements PhysParserConstants {
                 }
                 if(!Double.isNaN(result)) {
                         variables.put(ident.image, physpObject);
-                                System.out.println(result);
+                                System.out.println(ColorCodes.GREEN + result + ColorCodes.RESET);
                 }
                 else {
                                 System.out.println(ColorCodes.RED + "Cannot perform conversion for specified attribute." + ColorCodes.RESET);
@@ -207,7 +207,7 @@ public class PhysParser implements PhysParserConstants {
                 }
                 if(!Double.isNaN(result)) {
                         variables.put(ident.image, physpVector);
-                                System.out.println(result);
+                                System.out.println(ColorCodes.GREEN + result + ColorCodes.RESET);
                 }
                 else {
                                 System.out.println(ColorCodes.RED + "Cannot perform conversion for specified attribute." + ColorCodes.RESET);
