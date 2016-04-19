@@ -6,11 +6,15 @@ public class Converter {
         else if (from.equals("m")) {
             switch(to) {
             case "cm":
-                return value * 1000;
+                return value * 100;
             case "km":
                 return value / 1000;
             case "mile":
                 return value * 0.000621371192;
+            case "in":
+                return value * 39.370;
+            case "ft":
+                return value * 3.2808;
             default:
                 return Double.NaN;
             }
@@ -18,18 +22,22 @@ public class Converter {
         else if(to.equals("m")) {
             switch(from) {
             case "cm":
-                return value / 1000;
+                return value / 100;
             case "km":
                 return value * 1000;
             case "mile":
                 return value * 1609.344;
+            case "in":
+                return value / 39.370;
+            case "ft":
+                return value / 3.2808;
             default:
                 return Double.NaN;
             }
         }
         return Double.NaN;
     }
-    
+    //there's a lot of unambiguity here...
     public static double Force(String from, String to, double value) {
         if(from.equals(to))
             return value;
@@ -58,31 +66,31 @@ public class Converter {
         else if(from.equals("m/s")) {
             switch(to) {
             case "cm/s":
-                return Double.NaN;
+                return value * 100;
             case "ft/s":
-                return Double.NaN;
+                return value * 3.2808;
             case "ft/min":
-                return Double.NaN;
+                return (value * 3.2808) / 60;
             case "mile/hr":
-                return Double.NaN;
+                return (value * 0.000621371192) / 3600;
             case "km/hr":
-                return Double.NaN;
+                return (value * 1000) / 3600;
             default:
                 return Double.NaN;
             }
         }
         else if(to.equals("m/s")) {
-            switch(to) {
+            switch(from) {
             case "cm/s":
-                return Double.NaN;
+                return value / 100;
             case "ft/s":
-                return Double.NaN;
+                return value / 3.2808;
             case "ft/min":
-                return Double.NaN;
+                return (value / 3.2808) / 60;
             case "mile/hr":
-                return Double.NaN;
+                return (value * 1609.344) / 3600;
             case "km/hr":
-                return Double.NaN;
+                return (value * 1000) / 3600;
             default:
                 return Double.NaN;
             }
@@ -134,9 +142,9 @@ public class Converter {
         else if(from.equals("s")) {
             switch(to) {
             case "min":
-                return Double.NaN;
+                return value / 60;
             case "hr":
-                return Double.NaN;
+                return value / 3600;
             default:
                 return Double.NaN;
             }
@@ -144,9 +152,9 @@ public class Converter {
         else if(to.equals("s")) {
             switch(from) {
             case "min":
-                return Double.NaN;
+                return value * 60;
             case "hr":
-                return Double.NaN;
+                return value * 3600;
             default:
                 return Double.NaN;
             }
@@ -160,7 +168,7 @@ public class Converter {
         else if(from.equals("degrees")) {
             switch(to) {
             case "radians":
-                return Double.NaN;
+                return value * (Math.PI / 180.0);
             default:
                 return Double.NaN;
             }
@@ -168,13 +176,10 @@ public class Converter {
         else if(to.equals("degrees")) {
             switch(from) {
             case "radians":
-                return Double.NaN;
+                return value * (180.0 / Math.PI);
             default:
                 return Double.NaN;
             }
-        }
-        if(from.equals(to)) {
-            return value;
         }
         return Double.NaN;
     }
