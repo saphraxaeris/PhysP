@@ -86,7 +86,7 @@ void Statement(HashMap variables):{
     else if(obj.image.equals("vector")) {	  variables.put(ident.image, new PhysPVector());
     }
     else {
-      System.out.println("Invalid data type.");    }  }
+      System.out.println(ColorCodes.RED + "Invalid data type." + ColorCodes.RESET);    }  }
 |
   ident=<ID> " with " attr=<ATTRIBUTE> val=<DOUBLE> msr=<MEASUREMENT>  {
     if(variables.containsKey(ident.image)) {	  if(variables.get(ident.image) instanceof PhysPObject) {

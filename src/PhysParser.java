@@ -93,7 +93,7 @@ public class PhysParser implements PhysParserConstants {
           variables.put(ident.image, new PhysPVector());
     }
     else {
-      System.out.println("Invalid data type.");
+      System.out.println(ColorCodes.RED + "Invalid data type." + ColorCodes.RESET);
     }
       break;
     case ID:
