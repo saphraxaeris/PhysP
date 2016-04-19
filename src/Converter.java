@@ -9,7 +9,7 @@ public class Converter {
                 return value * 100;
             case "km":
                 return value / 1000;
-            case "mile":
+            case "mi":
                 return value * 0.000621371192;
             case "in":
                 return value * 39.370;
@@ -25,7 +25,7 @@ public class Converter {
                 return value / 100;
             case "km":
                 return value * 1000;
-            case "mile":
+            case "mi":
                 return value * 1609.344;
             case "in":
                 return value / 39.370;
@@ -71,9 +71,9 @@ public class Converter {
                 return value * 3.2808;
             case "ft/min":
                 return (value * 3.2808) / 60;
-            case "mile/hr":
+            case "mi/h":
                 return (value * 0.000621371192) / 3600;
-            case "km/hr":
+            case "km/h":
                 return (value * 1000) / 3600;
             default:
                 return Double.NaN;
@@ -87,9 +87,9 @@ public class Converter {
                 return value / 3.2808;
             case "ft/min":
                 return (value / 3.2808) / 60;
-            case "mile/hr":
+            case "mi/h":
                 return (value * 1609.344) / 3600;
-            case "km/hr":
+            case "km/h":
                 return (value * 1000) / 3600;
             default:
                 return Double.NaN;
@@ -109,9 +109,9 @@ public class Converter {
                 return Double.NaN;
             case "ft/min^2":
                 return Double.NaN;
-            case "mile/hr^2":
+            case "mi/h^2":
                 return Double.NaN;
-            case "km/hr^2":
+            case "km/h^2":
                 return Double.NaN;
             default:
                 return Double.NaN;
@@ -125,9 +125,9 @@ public class Converter {
                 return Double.NaN;
             case "ft/min^2":
                 return Double.NaN;
-            case "mile/hr^2":
+            case "mi/h^2":
                 return Double.NaN;
-            case "km/hr^2":
+            case "km/h^2":
                 return Double.NaN;
             default:
                 return Double.NaN;
@@ -143,7 +143,7 @@ public class Converter {
             switch(to) {
             case "min":
                 return value / 60;
-            case "hr":
+            case "h":
                 return value / 3600;
             default:
                 return Double.NaN;
@@ -153,7 +153,7 @@ public class Converter {
             switch(from) {
             case "min":
                 return value * 60;
-            case "hr":
+            case "h":
                 return value * 3600;
             default:
                 return Double.NaN;
