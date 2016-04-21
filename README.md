@@ -63,9 +63,9 @@
 *  Create objects or vectors <br />
 `define <name> as <datatype>`
 *  Assign attributes to objects <br />
-`<name> with <attribute> <value>`
+`<name> with <attribute> <value><measurement>`
 * Display or calculate attributes of objects <br />
-`return <name> <attribute>`
+`return <name> <attribute> in <measurement>`
 * Make comparisons between object attribute and value <br />
 `is <name> <attribute> <comparison> <value>`
 * Remove previously declared objects <br />
