@@ -43,7 +43,7 @@ public class PhysParser implements PhysParserConstants {
     case QUESTION:
     case ID:
     case 38:
-    case 39:
+    case 40:
       label_1:
       while (true) {
         Statement(variables);
@@ -60,7 +60,7 @@ public class PhysParser implements PhysParserConstants {
         case QUESTION:
         case ID:
         case 38:
-        case 39:
+        case 40:
           ;
           break;
         default:
@@ -162,6 +162,7 @@ public class PhysParser implements PhysParserConstants {
       jj_consume_token(38);
       ident = jj_consume_token(ID);
       attr = jj_consume_token(ATTRIBUTE);
+      jj_consume_token(39);
       msr = jj_consume_token(MEASUREMENT);
     if(variables.containsKey(ident.image)) {
       double temp = Double.NaN;
@@ -188,7 +189,7 @@ public class PhysParser implements PhysParserConstants {
                 }
                 if(!Double.isNaN(result)) {
                         variables.put(ident.image, physpObject);
-                                System.out.println(ColorCodes.GREEN + result + ColorCodes.RESET);
+                                System.out.println(ColorCodes.GREEN + attr.image + result + msr.image + ColorCodes.RESET);
                 }
                 else {
                                 System.out.println(ColorCodes.RED + "Cannot perform conversion for specified attribute." + ColorCodes.RESET);
@@ -211,7 +212,7 @@ public class PhysParser implements PhysParserConstants {
                 }
                 if(!Double.isNaN(result)) {
                         variables.put(ident.image, physpVector);
-                                System.out.println(ColorCodes.GREEN + result + ColorCodes.RESET);
+                                System.out.println(ColorCodes.GREEN + attr.image + result + msr.image + ColorCodes.RESET);
                 }
                 else {
                                 System.out.println(ColorCodes.RED + "Cannot perform conversion for specified attribute." + ColorCodes.RESET);
@@ -223,8 +224,8 @@ public class PhysParser implements PhysParserConstants {
       System.out.println(ColorCodes.RED + "Invalid identifier." + ColorCodes.RESET);
     }
       break;
-    case 39:
-      jj_consume_token(39);
+    case 40:
+      jj_consume_token(40);
       ident = jj_consume_token(ID);
     if(variables.containsKey(ident.image)) {
       variables.remove(ident.image);
@@ -335,7 +336,7 @@ public class PhysParser implements PhysParserConstants {
       jj_la1_0 = new int[] {0x0,0x1040,0x401041,0x1040,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x10,0xc1,0xc1,0xc1,};
+      jj_la1_1 = new int[] {0x10,0x141,0x141,0x141,};
    }
 
   /** Constructor with InputStream. */
@@ -473,7 +474,7 @@ public class PhysParser implements PhysParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[40];
+    boolean[] la1tokens = new boolean[41];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -490,7 +491,7 @@ public class PhysParser implements PhysParserConstants {
         }
       }
     }
-    for (int i = 0; i < 40; i++) {
+    for (int i = 0; i < 41; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
