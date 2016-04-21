@@ -48,12 +48,12 @@
 * mi/hr : miles per hour
 
 ####Acceleration
-* cm/s : centimeters per seconds squared
-* m/s : meters per seconds squared
-* km/hr : kilometers per hours squared
-* ft/s : feet per seconds squared
-* ft/min : feet per minutes squared
-* mi/hr : miles per hours squared
+* cm/s^2 : centimeters per seconds squared
+* m/s^2 : meters per seconds squared
+* km/hr^2 : kilometers per hours squared
+* ft/s^2 : feet per seconds squared
+* ft/min^2 : feet per minutes squared
+* mi/hr^2 : miles per hours squared
 
 ####Angle
 * degrees : degrees
