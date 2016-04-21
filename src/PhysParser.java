@@ -19,9 +19,13 @@ public class PhysParser implements PhysParserConstants {
                 parser = new PhysParser(new java.io.FileInputStream(args[0]));
                 }
 
+                System.out.println(ColorCodes.CYAN + "Welcome to PhysP. Scanner open." + ColorCodes.RESET);
+
                 while (valid) {
                         valid = parser.read(variables);
                 }
+
+                System.out.println(ColorCodes.CYAN + "Terminating scanner." + ColorCodes.RESET);
     }
         catch (Throwable e)
     {

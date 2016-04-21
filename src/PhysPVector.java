@@ -1,5 +1,3 @@
-import javafx.beans.binding.When.StringConditionBuilder;
-
 public class PhysPVector {
 	private double xComponent = Double.NaN;
 	private double yComponent = Double.NaN;
@@ -61,13 +59,20 @@ public class PhysPVector {
 	/***************************************/
 	/* Private Functions */
 	/***************************************/
+	//Formulas
+	// 1.) magnitude = (x^2 + y^2)^(1/2)
+	// 2.) sin(angle) = y/magnitude
+	// 3.) cos(angle) = x/magnitude
+	// 4.) tan(angle) = y/x
 	private boolean calcXComponent() {
 			if (!Double.isNaN(magnitude) && !Double.isNaN(angle)) {
 				xComponent = magnitude*Math.cos(angle);
-				return true;
+				System.out.println(ColorCodes.GREEN + "Used: cos(angle) = x/magnitude" + ColorCodes.RESET);
+				return true;//3
 			} else if (!Double.isNaN(magnitude) && !Double.isNaN(yComponent)) {
 				xComponent = Math.sqrt(Math.pow(magnitude, 2) - Math.pow(yComponent, 2));
-				return true;
+				System.out.println(ColorCodes.GREEN + "Used: magnitude = (x^2 + y^2)^(1/2)" + ColorCodes.RESET);
+				return true;//1
 			} else {
 				if(!Double.isNaN(xComponent)) {
 					return true;
@@ -84,10 +89,12 @@ public class PhysPVector {
 	private boolean calcYComponent() {
 			if (!Double.isNaN(magnitude)&& !Double.isNaN(angle)) {
 				yComponent = magnitude*Math.sin(angle);
-				return true;
+				System.out.println(ColorCodes.GREEN + "Used: sin(angle) = y/magnitude" + ColorCodes.RESET);
+				return true;//2
 			} else if (!Double.isNaN(magnitude) && !Double.isNaN(xComponent)) {
 				yComponent = Math.sqrt(Math.pow(magnitude, 2) - Math.pow(xComponent, 2));
-				return true;
+				System.out.println(ColorCodes.GREEN + "Used: magnitude = (x^2 + y^2)^(1/2)" + ColorCodes.RESET);
+				return true;//1
 			} else {
 				if(!Double.isNaN(yComponent)) {
 					return true;
@@ -104,15 +111,18 @@ public class PhysPVector {
 	private boolean calcMagnitude() {
 			if(!Double.isNaN(xComponent) && !Double.isNaN(yComponent)) {
 				magnitude = Math.sqrt(Math.pow(xComponent, 2) + Math.pow(yComponent, 2));
-				return true;
+				System.out.println(ColorCodes.GREEN + "Used: magnitude = (x^2 + y^2)^(1/2)" + ColorCodes.RESET);
+				return true;//1
 			}
 			else if(!Double.isNaN(xComponent) && !Double.isNaN(angle)) {
 				magnitude = xComponent/Math.cos(angle);
-				return true;
+				System.out.println(ColorCodes.GREEN + "Used: sin(angle) = y/magnitude" + ColorCodes.RESET);
+				return true;//2
 			}
 			else if(!Double.isNaN(yComponent) && !Double.isNaN(angle)) {
 				magnitude = yComponent/Math.sin(angle);
-				return true;
+				System.out.println(ColorCodes.GREEN + "Used: cos(angle) = x/magnitude" + ColorCodes.RESET);
+				return true;//3
 			}
 			else {
 				if(!Double.isNaN(magnitude)) {
@@ -131,17 +141,18 @@ public class PhysPVector {
 	private boolean calcAngle() {
 			if(!Double.isNaN(xComponent) && !Double.isNaN(yComponent)) {
 				angle = Math.atan(yComponent/xComponent);
-				return true;
+				System.out.println(ColorCodes.GREEN + "Used: tan(angle) = y/x" + ColorCodes.RESET);
+				return true;//4
 			}
 			else if(!Double.isNaN(xComponent) && !Double.isNaN(magnitude)) {
-			
-				angle = Math.atan(yComponent/xComponent);
-				return true;
+				angle = Math.acos(xComponent/magnitude);
+				System.out.println(ColorCodes.GREEN + "Used: cos(angle) = x/magnitude" + ColorCodes.RESET);
+				return true;//3
 			}
 			else if(!Double.isNaN(yComponent) && !Double.isNaN(magnitude)) {
-				
-				angle = Math.atan(yComponent/xComponent);
-				return true;
+				angle = Math.asin(yComponent/magnitude);
+				System.out.println(ColorCodes.GREEN + "Used: sin(angle) = y/magnitude" + ColorCodes.RESET);
+				return true;//2
 			}
 			else {
 				if(!Double.isNaN(angle)) {

@@ -17,9 +17,13 @@ public class PhysParser{  public static void main(String args []) throws Parse
     		parser = new PhysParser(new java.io.FileInputStream(args[0]));
 		}
 
+		System.out.println(ColorCodes.CYAN + "Welcome to PhysP. Scanner open." + ColorCodes.RESET);
+		
 		while (valid) {
 			valid = parser.read(variables);
 		}
+
+		System.out.println(ColorCodes.CYAN + "Terminating scanner." + ColorCodes.RESET);
     }
    	catch (Throwable e)
     {
@@ -51,7 +55,7 @@ TOKEN: /* Measurements */
 |   < #VELMEASURE: "cm/s" | "m/s" | "ft/s" | "ft/min" | "mi/h" | "km/h" >
 |   < #DISTANCEMEASURE: "cm" | "m" | "km" | "mi" | "in" | "ft" >
 |   < #TIMEMEASURE : "s" | "min" | "hr" >
-|   < #ANGLEMEASURE : "degress" | "radians" >
+|   < #ANGLEMEASURE : "degrees" | "radians" >
 }
 TOKEN: /* Objects and Vectors */
 {

@@ -21,6 +21,39 @@
 * Time Moved
 * Acceleration
 
+### Measurements
+####Force
+*N - Newtons
+*pound - pounds force
+####Time
+*s - seconds
+*min - minutes
+*hr - hours
+####Distance
+*cm - centimeters
+*m - meters
+*km - kilometers
+*in - inches
+*ft - feet
+*mi - miles
+####Velocity
+*cm/s - centimeters per second
+*m/s - meters per second
+*km/hr - kilometers per hour
+*ft/s - feet per second
+*ft/min - feet per minute
+*mi/hr - miles per hour
+####Acceleration
+*cm/s - centimeters per seconds squared
+*m/s - meters per seconds squared
+*km/hr - kilometers per hours squared
+*ft/s - feet per seconds squared
+*ft/min - feet per minutes squared
+*mi/hr - miles per hours squared
+####Angle
+*degrees - degrees
+*radians - radians
+
 ### Commands
 *  Create objects or vectors <br />
 `define <name> as <datatype>`
@@ -33,7 +66,7 @@
 * Remove previously declared objects <br />
 `remove <name>`
 
-##Requiremnts
+##Requirements
 1. Have Java installed on your machine, found [here](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 > To verify installation write the following in a terminal or command prompt

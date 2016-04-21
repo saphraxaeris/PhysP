@@ -1,5 +1,10 @@
 
 public class Converter {
+	/*
+	 * Converter Tool:
+	 * https://www.unitjuggler.com/convert-acceleration-from-ms2-to-fts2.html
+	 */
+	
     public static double Distance(String from, String to, double value) {
         if(from.equals(to))
             return value;
@@ -37,14 +42,14 @@ public class Converter {
         }
         return Double.NaN;
     }
-    //there's a lot of unambiguity here...
+
     public static double Force(String from, String to, double value) {
         if(from.equals(to))
             return value;
         else if(from.equals("N")) {
             switch(to) {
             case "pounds":
-                return Double.NaN;
+                return value * 0.224809;
             default:
                 return Double.NaN;
             }
@@ -52,7 +57,7 @@ public class Converter {
         else if(to.equals("N")) {
             switch(from) {
             case "pounds":
-                return Double.NaN;
+                return value * 4.44822;
             default:
                 return Double.NaN;
             }
@@ -104,15 +109,15 @@ public class Converter {
         else if(from.equals("m/s^2")) {
             switch(to) {
             case "cm/s^2":
-                return Double.NaN;
+                return value * 0.01;
             case "ft/s^2":
-                return Double.NaN;
+                return value * 3.2808398950131;
             case "ft/min^2":
-                return Double.NaN;
+                return value * 11811.023622047;
             case "mi/h^2":
-                return Double.NaN;
+                return value * 8052.9706513958;
             case "km/h^2":
-                return Double.NaN;
+                return value * 12960;
             default:
                 return Double.NaN;
             }
@@ -120,15 +125,15 @@ public class Converter {
         else if(to.equals("m/s^2")) {
             switch(from) {
             case "cm/s^2":
-                return Double.NaN;
+                return value * 100;
             case "ft/s^2":
-                return Double.NaN;
+                return value * 0.3048;
             case "ft/min^2":
-                return Double.NaN;
+                return value * 0.00008466666666667;
             case "mi/h^2":
-                return Double.NaN;
+                return value * 0.00012417777777778;
             case "km/h^2":
-                return Double.NaN;
+                return value * 0.0000716049382716;
             default:
                 return Double.NaN;
             }
