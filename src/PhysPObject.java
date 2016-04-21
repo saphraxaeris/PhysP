@@ -113,23 +113,23 @@ public class PhysPObject {
 	private boolean calcInitVel() {
 		if (!Double.isNaN(finalVel) && !Double.isNaN(accel) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
 			if(Double.isNaN(timeMoved))
-				timeMoved = finalTime - initTime;
+				calcTimeMoved();
 			initVel = finalVel - (accel*timeMoved);
 			System.out.println(ColorCodes.GREEN + "Used: v = v0 + a*t" + ColorCodes.RESET);
 			return true;//1
 		}
 		else if (((!Double.isNaN(finalPos) && !Double.isNaN(initPos)) || !Double.isNaN(displacement)) && !Double.isNaN(accel) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
 			if(Double.isNaN(timeMoved))
-				timeMoved = finalTime - initTime;
+				calcTimeMoved();
 			if(Double.isNaN(displacement))
-				displacement = finalPos - initPos;
+				calcDisplacement();
 			initVel = (displacement - (0.5)*accel*(Math.pow(timeMoved, 2)))/timeMoved;
 			System.out.println(ColorCodes.GREEN + "Used: x = x0 + v0*t + (1/2)*a*t^2" + ColorCodes.RESET);
 			return true;//2
 		}
 		else if (!Double.isNaN(finalVel) && !Double.isNaN(accel) && ((!Double.isNaN(finalPos) && !Double.isNaN(initPos)) || !Double.isNaN(displacement))) {
 			if (Double.isNaN(displacement))
-				displacement = finalPos - initPos;
+				calcDisplacement();
 			initVel = Math.sqrt(Math.pow(finalVel, 2) - 2*accel*displacement);
 			System.out.println(ColorCodes.GREEN + "Used: v^2 = v0^2 + 2*a*(x - x0)" + ColorCodes.RESET);
 			return true;//3
@@ -143,7 +143,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
+			System.out.println(ColorCodes.RED + "Too few arguments to calculate." + ColorCodes.RESET);
 			return false;
 		}
 	}
@@ -158,14 +158,14 @@ public class PhysPObject {
 	private boolean calcFinalVel() {
 		if (!Double.isNaN(initVel) && !Double.isNaN(accel) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
 			if(Double.isNaN(timeMoved))
-				timeMoved = finalTime - initTime;
+				calcTimeMoved();
 			finalVel = initVel + accel*timeMoved;
 			System.out.println(ColorCodes.GREEN + "Used: v = v0 + a*t" + ColorCodes.RESET);
 			return true;//1
 		}
 		else if (!Double.isNaN(initVel) && !Double.isNaN(accel) && ((!Double.isNaN(finalPos) && !Double.isNaN(initPos)) || !Double.isNaN(displacement))) {
 			if(Double.isNaN(displacement))
-				displacement = finalPos - initPos;
+				calcDisplacement();
 			finalVel = Math.sqrt(Math.pow(initVel, 2) + (2*accel*displacement));
 			System.out.println(ColorCodes.GREEN + "Used: v^2 = v0^2 + 2*a*(x - x0)" + ColorCodes.RESET);
 			return true;//3
@@ -179,7 +179,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
+			System.out.println(ColorCodes.RED + "Too few arguments to calculate." + ColorCodes.RESET);
 			return false;
 		}
 	}
@@ -199,7 +199,7 @@ public class PhysPObject {
 		}
 		else if (!Double.isNaN(finalPos)  && !Double.isNaN(accel) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
 			if(Double.isNaN(timeMoved))
-				timeMoved = finalTime - initTime;
+				calcTimeMoved();
 			initPos = finalPos - (initVel*timeMoved) - ((0.5)*accel*Math.pow(timeMoved, 2));
 			System.out.println(ColorCodes.GREEN + "Used: x = x0 + v0*t + (1/2)*a*t^2" + ColorCodes.RESET);
 			return true;//2
@@ -213,7 +213,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
+			System.out.println(ColorCodes.RED + "Too few arguments to calculate." + ColorCodes.RESET);
 			return false;
 		}
 	}
@@ -233,7 +233,7 @@ public class PhysPObject {
 		}
 		else if (!Double.isNaN(initPos)  && !Double.isNaN(accel) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
 			if(Double.isNaN(timeMoved))
-				timeMoved = finalTime - initTime;
+				calcTimeMoved();
 			finalPos = initPos + (initVel*timeMoved) + ((0.5)*accel*Math.pow(timeMoved, 2));
 			System.out.println(ColorCodes.GREEN + "Used: x = x0 + v0*t + (1/2)*a*t^2" + ColorCodes.RESET);
 			return true;//2
@@ -247,7 +247,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
+			System.out.println(ColorCodes.RED + "Too few arguments to calculate." + ColorCodes.RESET);
 			return false;
 		}
 	}
@@ -279,7 +279,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
+			System.out.println(ColorCodes.RED + "Too few arguments to calculate." + ColorCodes.RESET);
 			return false;
 		}
 	}
@@ -289,7 +289,7 @@ public class PhysPObject {
 			if(!Double.isNaN(finalTime))
 				initTime = finalTime - timeMoved;
 			else
-				initTime = timeMoved;
+				initTime = 0;
 		}
 		if(!Double.isNaN(initTime)) {
 			return true;
@@ -324,23 +324,23 @@ public class PhysPObject {
 	private boolean calcAccel() {
 		if (!Double.isNaN(initVel) && !Double.isNaN(finalVel) &&  (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
 			if(Double.isNaN(timeMoved))
-				timeMoved = finalTime - initTime;
+				calcTimeMoved();
 			accel = (finalVel-initVel)/timeMoved;
-			System.out.println(ColorCodes.GREEN + "Used: displacement = x - x0" + ColorCodes.RESET);
+			System.out.println(ColorCodes.GREEN + "Used: v = v0 + a*t" + ColorCodes.RESET);
 			return true;//0
 		}
 		else if(!Double.isNaN(initVel) && ((!Double.isNaN(finalPos) && !Double.isNaN(initPos)) || !Double.isNaN(displacement))  && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime))) ){
 			if(Double.isNaN(displacement))
-				displacement = finalPos - initPos;
+				calcDisplacement();
 			if(Double.isNaN(timeMoved))
-				timeMoved = finalTime - initTime;
+				calcTimeMoved();
 			accel = (2*(displacement-(timeMoved*initVel)))/Math.pow(timeMoved, 2);
 			System.out.println(ColorCodes.GREEN + "Used: x = x0 + v0*t + (1/2)*a*t^2" + ColorCodes.RESET);
 			return true;//2
 		}
 		else if(!Double.isNaN(initVel) && ((!Double.isNaN(finalPos) && !Double.isNaN(initPos)) || !Double.isNaN(displacement))  && !Double.isNaN(finalVel)){
 			if(Double.isNaN(displacement))
-				displacement = finalPos - initPos;
+				calcDisplacement();
 			accel = ((finalVel*finalVel)-(initVel*initVel))/(2*(displacement));
 			System.out.println(ColorCodes.GREEN + "Used: v^2 = v0^2 + 2*a*(x - x0)" + ColorCodes.RESET);
 			return true;//3
@@ -349,7 +349,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
+			System.out.println(ColorCodes.RED + "Too few arguments to calculate." + ColorCodes.RESET);
 			return false;
 		}
 	}
@@ -371,7 +371,7 @@ public class PhysPObject {
 		}
 		else if (!Double.isNaN(initVel) && !Double.isNaN(accel) && ((!Double.isNaN(finalPos) && !Double.isNaN(initPos)) || !Double.isNaN(displacement))) {
 			if(Double.isNaN(displacement))
-				displacement = finalPos - initPos;
+				calcDisplacement();
 			timeMoved = ((Math.sqrt(Math.pow(initVel,2) + 2*accel*(displacement))-initVel)/accel);
 			System.out.println(ColorCodes.GREEN + "Used: x = x0 + v0*t + (1/2)*a*t^2" + ColorCodes.RESET);
 			return true;//2 
@@ -380,7 +380,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
+			System.out.println(ColorCodes.RED + "Too few arguments to calculate." + ColorCodes.RESET);
 			return false;
 		}
 	}
@@ -395,9 +395,9 @@ public class PhysPObject {
 	private boolean calcAvgVel() {
 		if (((!Double.isNaN(finalPos) && !Double.isNaN(initPos)) || !Double.isNaN(displacement)) && (!Double.isNaN(timeMoved) || (!Double.isNaN(initTime) && !Double.isNaN(finalTime)))) {
 			if(Double.isNaN(displacement))
-				displacement = finalPos - initPos;
+				calcDisplacement();
 			if(Double.isNaN(timeMoved))
-				timeMoved = finalTime - initTime;
+				calcTimeMoved();
 			avgVel = displacement/timeMoved;
 			System.out.println(ColorCodes.GREEN + "Used: avgV = displacemen/t" + ColorCodes.RESET);
 			return true; //5
@@ -415,7 +415,7 @@ public class PhysPObject {
 			return true;
 		}
 		else { //Could not be computed. Print needed information implement more thoroughly later
-			System.out.println(ColorCodes.RED + "Too few argument" + ColorCodes.RESET);
+			System.out.println(ColorCodes.RED + "Too few arguments to calculate." + ColorCodes.RESET);
 			return false;
 		}
 	}
