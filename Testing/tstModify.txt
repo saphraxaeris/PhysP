@@ -1,0 +1,26 @@
+define test1 as object
+define test2 as object
+test1 with displacement 10 m
+test1 with final velocity 8 mi/h
+test1 with initial velocity 5 m/s
+test2 with acceleration 20 m/s^2
+test2 with final position 7 m
+test2 with initial position 11 ft
+return test1 displacement in m
+return test1 final velocity in mi/h
+return test1 initial velocity in m/s
+return test2 acceleration in m/s^2
+return test2 final position in m
+return test2 initial position in ft
+test1 with displacement 20 m
+test1 with final velocity 16 mi/h
+test1 with initial velocity 10 m/s
+test2 with acceleration 40 m/s^2
+test2 with final position 14 m
+test2 with initial position 22 ft
+return test1 displacement in m
+return test1 final velocity in mi/h
+return test1 initial velocity in m/s
+return test2 acceleration in m/s^2
+return test2 final position in m
+return test2 initial position in ft

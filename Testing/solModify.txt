@@ -1,0 +1,14 @@
+Welcome to PhysP. Scanner open.
+displacement = 10.0m
+final velocity = 8.0mi/h
+initial velocity = 5.0m/s
+acceleration = 20.0m/s^2
+final position = 7.0m
+initial position = 11.0ft
+displacement = 20.0m
+final velocity = 16.0mi/h
+initial velocity = 10.0m/s
+acceleration = 40.0m/s^2
+final position = 14.0m
+initial position = 22.0ft
+Terminating scanner.r

@@ -1,0 +1,5 @@
+define car as object
+car with displacement 30 m
+car with initial velocity 0 m/s
+car with acceleration 2 m/s^2
+return car time moved in s

@@ -1,0 +1,8 @@
+define test as object
+test with displacement 1 mi
+test with initial velocity 55 mi/h
+test with final velocity 55 mi/h
+return test displacement in m
+return test initial velocity in m/s
+return test final velocity in km/h
+return test final velocity in mi/h 

@@ -1,0 +1,6 @@
+Welcome to PhysP. Scanner open.
+displacement = 1609.344m
+initial velocity = 24.5872m/s
+final velocity = 88.51392km/h
+final velocity = 55.0mi/h
+Terminating scanner.

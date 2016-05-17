@@ -1,0 +1,4 @@
+Welcome to PhysP. Scanner open.
+Used: x = x0 + v0*t + (1/2)*a*t^2
+time moved = 5.477225575051661s
+Terminating scanner.
