@@ -5,12 +5,15 @@
 ### Data Types
 #### Vector
    > Force vectors
+   
    * Magnitude
    * Angle
    * X Component
    * Y Component
+
 #### Object
    > Point in space, mass, gravity nor friction is considered
+
    * Initial Position
    * Final Position
    * Displacement
@@ -25,39 +28,50 @@
 ### Measurements
 #### Force
    > Applicable to `Magnitude`, `X Component`, and `Y Component` attributes
+   
    * N : Newtons
    * pounds : pounds force
+
 #### Time
    > Applicable to `Initial Time`, `Final Time`, and `Time Moved` attributes
+
    * s : seconds
    * min : minutes
    * hr : hours
+
 #### Distance
    > Applicable to `Initial Position`, `Final Position`, and `Displacement` attributes
+
    * cm : centimeters
    * m : meters
    * km : kilometers
    * in : inches
    * ft : feet
    * mi : miles
+
 #### Velocity
    > Applicable to `Initial Velocity`, `Final Velocity`, and `Average Velocity` attributes
+
    * cm/s : centimeters per second
    * m/s : meters per second
    * km/hr : kilometers per hour
    * ft/s : feet per second
    * ft/min : feet per minute
    * mi/hr : miles per hour
+
 #### Acceleration
    > Applicable to `Acceleration` attribute
+
    * cm/s^2 : centimeters per seconds squared
    * m/s^2 : meters per seconds squared
    * km/hr^2 : kilometers per hours squared
    * ft/s^2 : feet per seconds squared
    * ft/min^2 : feet per minutes squared
    * mi/hr^2 : miles per hours squared
+
 #### Angle
    > Applicable to `Angle` attribute
+
    * degrees : degrees
    * radians : radians
 
