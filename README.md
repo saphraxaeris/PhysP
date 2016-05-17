@@ -23,16 +23,16 @@
    * Acceleration
 
 ### Measurements
-1. #### Force
+#### Force
    > Applicable to `Magnitude`, `X Component`, and `Y Component` attributes
    * N : Newtons
    * pounds : pounds force
-2. #### Time
+#### Time
    > Applicable to `Initial Time`, `Final Time`, and `Time Moved` attributes
    * s : seconds
    * min : minutes
    * hr : hours
-3. #### Distance
+#### Distance
    > Applicable to `Initial Position`, `Final Position`, and `Displacement` attributes
    * cm : centimeters
    * m : meters
@@ -40,7 +40,7 @@
    * in : inches
    * ft : feet
    * mi : miles
-4. #### Velocity
+#### Velocity
    > Applicable to `Initial Velocity`, `Final Velocity`, and `Average Velocity` attributes
    * cm/s : centimeters per second
    * m/s : meters per second
@@ -48,7 +48,7 @@
    * ft/s : feet per second
    * ft/min : feet per minute
    * mi/hr : miles per hour
-5. #### Acceleration
+#### Acceleration
    > Applicable to `Acceleration` attribute
    * cm/s^2 : centimeters per seconds squared
    * m/s^2 : meters per seconds squared
@@ -56,13 +56,14 @@
    * ft/s^2 : feet per seconds squared
    * ft/min^2 : feet per minutes squared
    * mi/hr^2 : miles per hours squared
-6. #### Angle
+#### Angle
    > Applicable to `Angle` attribute
    * degrees : degrees
    * radians : radians
 
 ### Comparisons
 > Used for comparing numeric values
+
 * equal to : Compares whether the two values are the same
 * not equal to : Compares whether the two values are not the same
 * greather than : Compares whether the first value is greater than the second value
@@ -71,12 +72,12 @@
 * less than or equal to : Compares whether the first value is less than the second value or equal
 
 ### Commands
-> <name> : Must start with lowercase letter followed by combination of letter, number or underscore <br />
-> <datatype>: View above for details
-> <attribute>: Specfic attribute that belongs to <datatype> of <name>, view above for details <br />
-> <value>: Must be valid numeric value <br />
-> <measurement>: Applicable measurement for <attribute>, view above for details <br />
-> <comparison>: View above for details
+> `<name>` : Must start with lowercase letter followed by combination of letter, number or underscore <br />
+> `<datatype>` : View above for details
+> `<attribute>` : Specfic attribute that belongs to <datatype> of <name>, view above for details <br />
+> `<value>` : Must be valid numeric value <br />
+> `<measurement>` : Applicable measurement for <attribute>, view above for details <br />
+> `<comparison>` : View above for details
 *  Create objects or vectors
    * `define <name> as <datatype>`
 *  Assign attributes to objects
