@@ -50,7 +50,7 @@ TOKEN : /* Keywords */
 TOKEN: /* Measurements */
 {
     < MEASUREMENT :  <FORCEMEASURE> | <ACCELMEASURE> | <VELMEASURE> | <DISTANCEMEASURE> | <TIMEMEASURE> >
-|   < #FORCEMEASURE : "N" | "pound" >
+|   < #FORCEMEASURE : "N" | "pounds" >
 |   < #ACCELMEASURE: "cm/s^2" | "m/s^2" | "ft/s^2" | "ft/min^2" | "mi/h^2" | "km/h^2" >
 |   < #VELMEASURE: "cm/s" | "m/s" | "ft/s" | "ft/min" | "mi/h" | "km/h" >
 |   < #DISTANCEMEASURE: "cm" | "m" | "km" | "mi" | "in" | "ft" >
