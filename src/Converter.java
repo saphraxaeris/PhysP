@@ -77,9 +77,9 @@ public class Converter {
             case "ft/min":
                 return (value * 3.2808) / 60;
             case "mi/h":
-                return (value * 0.000621371192) / 3600;
+                return ((value * 3600) / 1609.344 );
             case "km/h":
-                return (value * 1000) / 3600;
+                return (value * 3600) / 1000;
             default:
                 return Double.NaN;
             }
