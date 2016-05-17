@@ -3,13 +3,13 @@
 
 ## Documentation
 ### Data Types
-1. #### Vector
+#### Vector
    > Force vectors
    * Magnitude
    * Angle
    * X Component
    * Y Component
-2. #### Object
+#### Object
    > Point in space, mass, gravity nor friction is considered
    * Initial Position
    * Final Position
@@ -72,12 +72,13 @@
 * less than or equal to : Compares whether the first value is less than the second value or equal
 
 ### Commands
-> `<name>` : Must start with lowercase letter followed by combination of letter, number or underscore <br />
-> `<datatype>` : View above for details
-> `<attribute>` : Specfic attribute that belongs to <datatype> of <name>, view above for details <br />
-> `<value>` : Must be valid numeric value <br />
-> `<measurement>` : Applicable measurement for <attribute>, view above for details <br />
-> `<comparison>` : View above for details
+> `name` : Must start with lowercase letter followed by combination of letter, number or underscore <br />
+> `datatype` : View above for details
+> `attribute` : Specfic attribute that belongs to <datatype> of <name>, view above for details <br />
+> `value` : Must be valid numeric value <br />
+> `measurement` : Applicable measurement for <attribute>, view above for details <br />
+> `comparison` : View above for details
+
 *  Create objects or vectors
    * `define <name> as <datatype>`
 *  Assign attributes to objects
@@ -93,30 +94,30 @@
 
 ## Requirements
 1. Have Java installed on your machine, found [here](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-   > To verify installation write the following in a terminal or command prompt, if installed your Java version will appear
-   ```bash
+> To verify installation write the following in a terminal or command prompt, if installed your Java version will appear
+```bash
    $ java -version
-   ```
+```
 
 ## Building
 1. Extract project folder.
 2. Open a terminal or command prompt inside project folder.
 3. Run these commands to build the language.
-   ```bash
-   cd src
-   java -cp javacc.jar javacc PhysP.jj
-   javac *.java
-   ```
+```bash
+  cd src
+  java -cp javacc.jar javacc PhysP.jj
+  javac *.java
+```
 
 ## Running
 * Run the following command to run the language in the terminal or command prompt.
-   ```bash
-   java PhysParser
-   ```
+```bash
+  java PhysParser
+```
 * To execute code from a text file fun the following command.
-   ```bash
-   java PhysParser `filepath\filename.txt`
-   ```
+```bash
+  java PhysParser `filepath\filename.txt`
+```
 
 ## Authors
 * Stephan Elias Remy
