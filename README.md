@@ -1,6 +1,7 @@
 # PhysP
 > A programming language for solving basic physic problems.
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Ho84FuP4mLA" frameborder="0" allowfullscreen></iframe>
+
+[![ScreenShot](http://i.imgur.com/HiSN7Ds.png)](https://youtu.be/Ho84FuP4mLA)
 <br />
 
 ## Documentation
